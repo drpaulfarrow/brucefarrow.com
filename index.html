@@ -1,29 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>My Arcade Game</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Arcade Fullscreen Fit</title>
   <style>
     html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      width: 100%;
-      background: black; /* optional */
+      margin: 0; padding: 0; height: 100%; width: 100%; background: #000;
     }
-    iframe {
-      border: none;
-      width: 100%;
-      height: 100%;
-      display: block;
+    #wrap {
+      position: fixed; inset: 0; display: grid; place-items: center;
+      background: #000; /* letterbox bars */
+    }
+    #game {
+      border: 0; display: block; /* size set by JS */
+      max-width: 100vw; max-height: 100vh;
     }
   </style>
 </head>
 <body>
-  <iframe 
-    src="https://arcade.makecode.com/---run?id=S30993-31271-43451-04230&fullscreen" 
-    allowfullscreen 
-    sandbox="allow-popups allow-forms allow-scripts allow-same-origin">
-  </iframe>
+  <div id="wrap">
+    <iframe
+      id="game"
+      src="https://arcade.makecode.com/---run?id=S30993-31271-43451-04230&fullscreen"
+      allowfullscreen
+      sandbox="allow-popups allow-forms allow-scripts allow-same-origin">
+    </iframe>
+  </div>
+
+  <script>
+    // Fit the 4:3 game inside the viewport without cropping
+    function sizeGame() {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const targetRatio = 4 / 3;   // MakeCode Arcade aspect
+      const viewRatio = vw / vh;
+
+      let w, h;
+      if (viewRatio > targetRatio) {
+        // Window is "wider" than 4:3 -> limit by height
+        h = vh;
+        w = Math.round(h * targetRatio);
+      } else {
+        // Window is "taller" than 4:3 -> limit by width
+        w = vw;
+        h = Math.round(w / targetRatio);
+      }
+
+      const iframe = document.getElementById('game');
+      iframe.style.width = w + 'px';
+      iframe.style.height = h + 'px';
+    }
+
+    window.addEventListener('resize', sizeGame);
+    window.addEventListener('orientationchange', sizeGame);
+    sizeGame();
+  </script>
 </body>
 </html>
