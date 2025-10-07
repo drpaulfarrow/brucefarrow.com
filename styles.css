@@ -22,6 +22,58 @@ main {
     padding: 2rem;
 }
 
+.video-section {
+    max-width: 900px;
+    margin: 1.5rem auto;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(20,20,30,0.08);
+    background: #000;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border: 0;
+}
+
+.caption {
+    font-size: 0.95rem;
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+.tagline {
+    margin: 0.25rem 0 0.75rem;
+    color: #ddd;
+}
+
+.actions {
+    margin-top: 1.25rem;
+}
+
+.greet {
+    margin-top: 0.5rem;
+    font-weight: 600;
+}
+
+.greet {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 300ms ease, transform 300ms ease;
+}
+.greet.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 button {
     background: #333;
     color: #fff;
