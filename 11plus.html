@@ -524,6 +524,44 @@
       margin-bottom: 1rem;
     }
     
+    /* Practice papers links */
+    .resources-section {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: var(--bg);
+      border-radius: 12px;
+    }
+    
+    .resources-section h3 {
+      color: var(--primary);
+      text-align: center;
+      margin-top: 0;
+    }
+    
+    .resources-section p {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    
+    .paper-link {
+      padding: 0.8rem;
+      background: white;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--accent);
+      border: 2px solid var(--border);
+      display: block;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+    }
+    
+    .paper-link:hover {
+      border-color: var(--primary);
+      background: #eff6ff;
+      transform: translateX(5px);
+    }
+    
     /* Animations */
     @keyframes correctPulse {
       0%, 100% { transform: scale(1); }
@@ -634,6 +672,37 @@
       <p>Each quiz randomly selects 20 questions from a massive question bank (200+ questions). With such a large pool, you can practice many times without seeing the same questions! Get instant feedback with detailed explanations, review your mistakes, and track performance by category. Good luck!</p>
       
       <button class="btn btn-primary" onclick="startQuiz()">Start Practice Quiz</button>
+      
+      <div class="resources-section">
+        <h3>📚 Official CRGS Practice Papers</h3>
+        <p>Download past exam papers to practice:</p>
+        <div style="display: grid; gap: 0.5rem; max-width: 600px; margin: 0 auto;">
+          <a href="11plus/English-Paper-2022-Entry-for-Publication.pdf" target="_blank" class="paper-link">
+            📄 English Paper 2022
+          </a>
+          <a href="11plus/ENGLISH-2022-Entry-Mark-Scheme-for-publication.pdf" target="_blank" class="paper-link">
+            📄 English Mark Scheme 2022
+          </a>
+          <a href="11plus/English-Continuous-Writing-2022-Entry-for-Publication.pdf" target="_blank" class="paper-link">
+            📄 English Continuous Writing 2022
+          </a>
+          <a href="11plus/English-Paper-2021-Entry.pdf" target="_blank" class="paper-link">
+            📄 English Paper 2021
+          </a>
+          <a href="11plus/English-Paper-2021-Entry-Marking-Scheme.pdf" target="_blank" class="paper-link">
+            📄 English Mark Scheme 2021
+          </a>
+          <a href="11plus/English-Continuous-Writing-Paper-2021-Entry.pdf" target="_blank" class="paper-link">
+            📄 English Continuous Writing 2021
+          </a>
+          <a href="11plus/Maths-Paper-2022-Entry-for-Publication.pdf" target="_blank" class="paper-link">
+            📄 Maths Paper 2022
+          </a>
+          <a href="11plus/Maths-2022-Entry-Mark-Scheme.pdf" target="_blank" class="paper-link">
+            📄 Maths Mark Scheme 2022
+          </a>
+        </div>
+      </div>
     </div>
 
     <!-- Quiz Area -->
@@ -704,6 +773,37 @@
       <div class="action-buttons">
         <button class="btn btn-primary" onclick="restartQuiz()">Try Again</button>
         <button class="btn btn-secondary" onclick="location.href='index.html'">Back to Home</button>
+      </div>
+      
+      <div class="resources-section">
+        <h3>📚 Official CRGS Practice Papers</h3>
+        <p>Download past exam papers to practice:</p>
+        <div style="display: grid; gap: 0.5rem; max-width: 600px; margin: 0 auto;">
+          <a href="11plus/English-Paper-2022-Entry-for-Publication.pdf" target="_blank" class="paper-link">
+            📄 English Paper 2022
+          </a>
+          <a href="11plus/ENGLISH-2022-Entry-Mark-Scheme-for-publication.pdf" target="_blank" class="paper-link">
+            📄 English Mark Scheme 2022
+          </a>
+          <a href="11plus/English-Continuous-Writing-2022-Entry-for-Publication.pdf" target="_blank" class="paper-link">
+            📄 English Continuous Writing 2022
+          </a>
+          <a href="11plus/English-Paper-2021-Entry.pdf" target="_blank" class="paper-link">
+            📄 English Paper 2021
+          </a>
+          <a href="11plus/English-Paper-2021-Entry-Marking-Scheme.pdf" target="_blank" class="paper-link">
+            📄 English Mark Scheme 2021
+          </a>
+          <a href="11plus/English-Continuous-Writing-Paper-2021-Entry.pdf" target="_blank" class="paper-link">
+            📄 English Continuous Writing 2021
+          </a>
+          <a href="11plus/Maths-Paper-2022-Entry-for-Publication.pdf" target="_blank" class="paper-link">
+            📄 Maths Paper 2022
+          </a>
+          <a href="11plus/Maths-2022-Entry-Mark-Scheme.pdf" target="_blank" class="paper-link">
+            📄 Maths Mark Scheme 2022
+          </a>
+        </div>
       </div>
     </div>
   </div>
