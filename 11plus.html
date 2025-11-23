@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>11+ Practice | Colchester Royal Grammar School</title>
+  <style>
+    /* --- Basic page layout --- */
+    :root {
+      --bg: #f0f4f8;
+      --card: #fff;
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --success: #10b981;
+      --error: #ef4444;
+      --warning: #f59e0b;
+      --muted: #6b7280;
+      --accent: #111827;
+      --border: #e5e7eb;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: var(--accent);
+      -webkit-font-smoothing: antialiased;
+      padding: 1rem;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    /* Header */
+    header {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      color: var(--primary);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .subtitle {
+      margin: 0.5rem 0 0;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+    
+    /* Welcome screen */
+    .welcome-screen {
+      background: white;
+      padding: 3rem 2rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+    
+    .welcome-screen h2 {
+      color: var(--primary);
+      margin-top: 0;
+      font-size: 2rem;
+    }
+    
+    .welcome-screen p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: var(--muted);
+      margin: 1rem 0;
+    }
+    
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    
+    .topic-card {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+    
+    .topic-card span {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+    }
+    
+    .btn-secondary {
+      background: var(--muted);
+      color: white;
+      margin-left: 1rem;
+    }
+    
+    .btn-secondary:hover {
+      background: #4b5563;
+      transform: translateY(-2px);
+    }
+    
+    /* Quiz area */
+    .quiz-area {
+      display: none;
+    }
+    
+    .quiz-area.active {
+      display: block;
+    }
+    
+    .progress-bar {
+      background: white;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    
+    .progress-track {
+      height: 12px;
+      background: var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--success) 100%);
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+    
+    .question-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      margin-bottom: 1rem;
+    }
+    
+    .question-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .question-category {
+      background: var(--primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+    
+    .question-number {
+      color: var(--muted);
+      font-weight: bold;
+    }
+    
+    .question-text {
+      font-size: 1.3rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    
+    .options {
+      display: grid;
+      gap: 1rem;
+    }
+    
+    .option {
+      background: var(--bg);
+      border: 3px solid var(--border);
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .option:hover {
+      border-color: var(--primary);
+      background: #eff6ff;
+      transform: translateX(5px);
+    }
+    
+    .option.selected {
+      border-color: var(--primary);
+      background: #eff6ff;
+    }
+    
+    .option.correct {
+      border-color: var(--success);
+      background: #d1fae5;
+      animation: correctPulse 0.5s ease;
+    }
+    
+    .option.incorrect {
+      border-color: var(--error);
+      background: #fee2e2;
+      animation: shake 0.5s ease;
+    }
+    
+    .option.disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    
+    .option-letter {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+      text-align: center;
+      background: white;
+      border-radius: 50%;
+      margin-right: 1rem;
+      font-weight: bold;
+      color: var(--primary);
+    }
+    
+    .feedback {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      display: none;
+    }
+    
+    .feedback.show {
+      display: block;
+      animation: slideDown 0.3s ease;
+    }
+    
+    .feedback.correct {
+      background: #d1fae5;
+      color: #065f46;
+      border: 2px solid var(--success);
+    }
+    
+    .feedback.incorrect {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 2px solid var(--error);
+    }
+    
+    .feedback strong {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+    
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    /* Results screen */
+    .results-screen {
+      background: white;
+      padding: 3rem 2rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      display: none;
+    }
+    
+    .results-screen.show {
+      display: block;
+      animation: slideUp 0.5s ease;
+    }
+    
+    .results-screen h2 {
+      font-size: 2.5rem;
+      margin-top: 0;
+      color: var(--primary);
+    }
+    
+    .score-display {
+      font-size: 4rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin: 1rem 0;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .score-message {
+      font-size: 1.3rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    
+    .stat-card {
+      padding: 1.5rem;
+      border-radius: 12px;
+      background: var(--bg);
+    }
+    
+    .stat-value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--primary);
+    }
+    
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+    
+    /* Animations */
+    @keyframes correctPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+    
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      body {
+        padding: 0.5rem;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      .welcome-screen,
+      .question-card {
+        padding: 1.5rem;
+      }
+      
+      .question-text {
+        font-size: 1.1rem;
+      }
+      
+      .option {
+        padding: 0.8rem 1rem;
+        font-size: 1rem;
+      }
+      
+      .btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+      }
+      
+      .btn-secondary {
+        margin-left: 0;
+        margin-top: 0.5rem;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <h1>🎓 11+ Practice Quiz</h1>
+      <p class="subtitle">Colchester Royal Grammar School Preparation</p>
+    </header>
+
+    <!-- Welcome Screen -->
+    <div id="welcomeScreen" class="welcome-screen">
+      <h2>Welcome to Your 11+ Practice!</h2>
+      <p>This interactive quiz will help you prepare for the 11+ entrance exam with questions across four key areas:</p>
+      
+      <div class="topic-grid">
+        <div class="topic-card">
+          <span>📚</span>
+          Verbal Reasoning
+        </div>
+        <div class="topic-card">
+          <span>🔢</span>
+          Mathematics
+        </div>
+        <div class="topic-card">
+          <span>✍️</span>
+          English
+        </div>
+        <div class="topic-card">
+          <span>🧩</span>
+          Non-Verbal Reasoning
+        </div>
+      </div>
+      
+      <p><strong>How it works:</strong></p>
+      <p>Answer 15 questions, get instant feedback, and see your score at the end. Good luck!</p>
+      
+      <button class="btn btn-primary" onclick="startQuiz()">Start Practice Quiz</button>
+    </div>
+
+    <!-- Quiz Area -->
+    <div id="quizArea" class="quiz-area">
+      <!-- Progress Bar -->
+      <div class="progress-bar">
+        <div class="progress-info">
+          <span>Progress</span>
+          <span id="progressText">0/15</span>
+        </div>
+        <div class="progress-track">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- Question Card -->
+      <div class="question-card">
+        <div class="question-header">
+          <span id="questionCategory" class="question-category"></span>
+          <span id="questionNumber" class="question-number"></span>
+        </div>
+        
+        <div id="questionText" class="question-text"></div>
+        
+        <div id="options" class="options"></div>
+        
+        <div id="feedback" class="feedback"></div>
+        
+        <div class="action-buttons">
+          <button id="nextBtn" class="btn btn-primary" style="display: none;" onclick="nextQuestion()">Next Question →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Screen -->
+    <div id="resultsScreen" class="results-screen">
+      <h2>🎉 Quiz Complete!</h2>
+      <div class="score-display" id="finalScore"></div>
+      <div class="score-message" id="scoreMessage"></div>
+      
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="correctCount"></div>
+          <div class="stat-label">Correct Answers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="incorrectCount"></div>
+          <div class="stat-label">Incorrect Answers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="percentageScore"></div>
+          <div class="stat-label">Percentage</div>
+        </div>
+      </div>
+      
+      <div class="action-buttons">
+        <button class="btn btn-primary" onclick="restartQuiz()">Try Again</button>
+        <button class="btn btn-secondary" onclick="location.href='index.html'">Back to Home</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Quiz questions database
+    const questions = [
+      // Verbal Reasoning
+      {
+        category: "Verbal Reasoning",
+        question: "Find the word that means the same as 'RAPID':",
+        options: ["Slow", "Quick", "Careful", "Loud"],
+        correct: 1,
+        explanation: "RAPID means fast or quick. They are synonyms."
+      },
+      {
+        category: "Verbal Reasoning",
+        question: "Complete the analogy: CAT is to KITTEN as DOG is to ___",
+        options: ["Puppy", "Pet", "Bone", "Bark"],
+        correct: 0,
+        explanation: "A kitten is a baby cat, just as a puppy is a baby dog."
+      },
+      {
+        category: "Verbal Reasoning",
+        question: "Which word is the odd one out?",
+        options: ["Apple", "Banana", "Carrot", "Orange"],
+        correct: 2,
+        explanation: "Carrot is a vegetable, while the others are fruits."
+      },
+      
+      // Mathematics
+      {
+        category: "Mathematics",
+        question: "What is 15% of 200?",
+        options: ["20", "25", "30", "35"],
+        correct: 2,
+        explanation: "15% of 200 = (15/100) × 200 = 30"
+      },
+      {
+        category: "Mathematics",
+        question: "If a train travels 120 miles in 2 hours, what is its average speed?",
+        options: ["50 mph", "60 mph", "70 mph", "80 mph"],
+        correct: 1,
+        explanation: "Speed = Distance ÷ Time = 120 ÷ 2 = 60 mph"
+      },
+      {
+        category: "Mathematics",
+        question: "What is the next number in the sequence: 2, 5, 11, 23, ___",
+        options: ["35", "41", "47", "53"],
+        correct: 2,
+        explanation: "Each number is double the previous number plus 1: (2×2)+1=5, (5×2)+1=11, (11×2)+1=23, (23×2)+1=47"
+      },
+      {
+        category: "Mathematics",
+        question: "A rectangle has a length of 12cm and a width of 7cm. What is its perimeter?",
+        options: ["19cm", "38cm", "84cm", "44cm"],
+        correct: 1,
+        explanation: "Perimeter = 2(length + width) = 2(12 + 7) = 2 × 19 = 38cm"
+      },
+      
+      // English
+      {
+        category: "English",
+        question: "Which sentence uses the correct punctuation?",
+        options: [
+          "Its a beautiful day outside.",
+          "It's a beautiful day outside.",
+          "Its' a beautiful day outside.",
+          "Its a beautiful day, outside."
+        ],
+        correct: 1,
+        explanation: "It's (with an apostrophe) is the contraction of 'it is'."
+      },
+      {
+        category: "English",
+        question: "Choose the correct spelling:",
+        options: ["Accommodate", "Acommodate", "Accomodate", "Acomodate"],
+        correct: 0,
+        explanation: "The correct spelling is 'Accommodate' with double 'c' and double 'm'."
+      },
+      {
+        category: "English",
+        question: "What type of word is 'quickly'?",
+        options: ["Noun", "Verb", "Adjective", "Adverb"],
+        correct: 3,
+        explanation: "Quickly is an adverb - it describes how an action is performed."
+      },
+      {
+        category: "English",
+        question: "Which word best completes the sentence? 'The athlete ran ___ to win the race.'",
+        options: ["slow", "slower", "slowest", "swiftly"],
+        correct: 3,
+        explanation: "Swiftly (quickly) makes the most sense in context of winning a race."
+      },
+      
+      // Non-Verbal Reasoning
+      {
+        category: "Non-Verbal Reasoning",
+        question: "A cube is rotated 90° clockwise. Which face will be on top?",
+        options: ["The same face", "The opposite face", "The adjacent face", "Cannot determine"],
+        correct: 2,
+        explanation: "When a cube rotates 90°, an adjacent face moves to the top position."
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "If a shape has 4 equal sides and 4 right angles, what is it?",
+        options: ["Rectangle", "Square", "Rhombus", "Trapezium"],
+        correct: 1,
+        explanation: "A square has 4 equal sides and 4 right angles."
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "How many lines of symmetry does a regular hexagon have?",
+        options: ["3", "4", "6", "8"],
+        correct: 2,
+        explanation: "A regular hexagon has 6 lines of symmetry."
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "What is the missing number in the pattern: 3, 6, 12, 24, ___",
+        options: ["36", "42", "48", "54"],
+        correct: 2,
+        explanation: "Each number is doubled: 3×2=6, 6×2=12, 12×2=24, 24×2=48"
+      }
+    ];
+
+    // Quiz state
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+
+    // Shuffle questions
+    function shuffleQuestions() {
+      for (let i = questions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [questions[i], questions[j]] = [questions[j], questions[i]];
+      }
+    }
+
+    function startQuiz() {
+      shuffleQuestions();
+      currentQuestion = 0;
+      score = 0;
+      answered = false;
+      
+      document.getElementById('welcomeScreen').style.display = 'none';
+      document.getElementById('quizArea').classList.add('active');
+      
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      const question = questions[currentQuestion];
+      answered = false;
+      
+      // Update progress
+      document.getElementById('progressText').textContent = `${currentQuestion + 1}/${questions.length}`;
+      document.getElementById('progressFill').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+      
+      // Update question
+      document.getElementById('questionCategory').textContent = question.category;
+      document.getElementById('questionNumber').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+      document.getElementById('questionText').textContent = question.question;
+      
+      // Create options
+      const optionsContainer = document.getElementById('options');
+      optionsContainer.innerHTML = '';
+      
+      question.options.forEach((option, index) => {
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'option';
+        optionDiv.innerHTML = `
+          <span class="option-letter">${String.fromCharCode(65 + index)}</span>
+          ${option}
+        `;
+        optionDiv.onclick = () => selectAnswer(index);
+        optionsContainer.appendChild(optionDiv);
+      });
+      
+      // Hide feedback and next button
+      document.getElementById('feedback').classList.remove('show', 'correct', 'incorrect');
+      document.getElementById('nextBtn').style.display = 'none';
+    }
+
+    function selectAnswer(selectedIndex) {
+      if (answered) return;
+      
+      answered = true;
+      const question = questions[currentQuestion];
+      const isCorrect = selectedIndex === question.correct;
+      
+      if (isCorrect) {
+        score++;
+      }
+      
+      // Update UI
+      const options = document.querySelectorAll('.option');
+      options.forEach((option, index) => {
+        option.classList.add('disabled');
+        if (index === question.correct) {
+          option.classList.add('correct');
+        } else if (index === selectedIndex && !isCorrect) {
+          option.classList.add('incorrect');
+        }
+      });
+      
+      // Show feedback
+      const feedback = document.getElementById('feedback');
+      feedback.className = 'feedback show ' + (isCorrect ? 'correct' : 'incorrect');
+      feedback.innerHTML = `
+        <strong>${isCorrect ? '✓ Correct!' : '✗ Incorrect'}</strong>
+        ${question.explanation}
+      `;
+      
+      // Show next button
+      document.getElementById('nextBtn').style.display = 'inline-block';
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function showResults() {
+      document.getElementById('quizArea').classList.remove('active');
+      
+      const resultsScreen = document.getElementById('resultsScreen');
+      const percentage = Math.round((score / questions.length) * 100);
+      
+      document.getElementById('finalScore').textContent = `${score}/${questions.length}`;
+      document.getElementById('correctCount').textContent = score;
+      document.getElementById('incorrectCount').textContent = questions.length - score;
+      document.getElementById('percentageScore').textContent = `${percentage}%`;
+      
+      let message = '';
+      if (percentage >= 90) {
+        message = 'Outstanding! You're well prepared for the 11+! 🌟';
+      } else if (percentage >= 75) {
+        message = 'Great job! You're doing really well! 🎉';
+      } else if (percentage >= 60) {
+        message = 'Good effort! Keep practicing! 👍';
+      } else {
+        message = 'Keep practicing and you'll improve! 💪';
+      }
+      
+      document.getElementById('scoreMessage').textContent = message;
+      resultsScreen.classList.add('show');
+    }
+
+    function restartQuiz() {
+      document.getElementById('resultsScreen').classList.remove('show');
+      document.getElementById('resultsScreen').style.display = 'none';
+      startQuiz();
+    }
+  </script>
+</body>
+</html>
+
