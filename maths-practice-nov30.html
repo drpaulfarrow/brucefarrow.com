@@ -250,12 +250,14 @@
           <li>Calculators are <strong>not permitted</strong></li>
           <li>Write clearly and check your answers</li>
           <li>Total marks available: <strong>60</strong></li>
+          <li><strong>Tip:</strong> Click "Print/Save as PDF" to download a blank copy to practice on paper!</li>
         </ul>
       </div>
       
       <p style="font-size: 1.1rem; margin: 1.5rem 0;">When you're ready to begin, click the button below. The timer will start automatically.</p>
       
       <button class="btn btn-primary" onclick="startExam()">Start Exam</button>
+      <button class="btn btn-secondary" onclick="window.print()">📄 Print/Save as PDF</button>
       <button class="btn btn-secondary" onclick="location.href='11plus.html'">Back to Practice Quiz</button>
     </div>
 
@@ -807,6 +809,7 @@
       <!-- Action Buttons -->
       <div class="action-buttons">
         <button class="btn btn-primary" onclick="finishExam()">Finish & Review</button>
+        <button class="btn btn-secondary" onclick="window.print()">📄 Print/Save as PDF</button>
         <button class="btn btn-secondary" onclick="if(confirm('Are you sure? Your answers will be lost.')) location.href='11plus.html'">Exit</button>
       </div>
     </div>

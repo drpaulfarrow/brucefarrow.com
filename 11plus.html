@@ -669,7 +669,7 @@
       </div>
       
       <p><strong>How it works:</strong></p>
-      <p>Each quiz randomly selects 20 questions from a massive question bank (200+ questions). With such a large pool, you can practice many times without seeing the same questions! Get instant feedback with detailed explanations, review your mistakes, and track performance by category. Good luck!</p>
+      <p>Each quiz randomly selects 20 questions from a massive question bank (220+ questions). With such a large pool, you can practice many times without seeing the same questions! Questions include both multiple-choice and written answers. Get instant feedback with detailed explanations, review your mistakes, and track performance by category. Good luck!</p>
       
       <button class="btn btn-primary" onclick="startQuiz()">Start Practice Quiz</button>
       
@@ -1589,6 +1589,182 @@
         question: "What is 13 + 29?",
         acceptedAnswers: ["42"],
         explanation: "13 + 29 = 42"
+      },
+      {
+        category: "Mathematics",
+        type: "text-input",
+        question: "Calculate: 4289 + 578",
+        acceptedAnswers: ["4867"],
+        explanation: "4289 + 578 = 4867"
+      },
+      {
+        category: "Mathematics",
+        type: "text-input",
+        question: "Calculate: 6042 - 495",
+        acceptedAnswers: ["5547"],
+        explanation: "6042 - 495 = 5547"
+      },
+      {
+        category: "Mathematics",
+        type: "text-input",
+        question: "Calculate: 576 ÷ 9",
+        acceptedAnswers: ["64"],
+        explanation: "576 ÷ 9 = 64"
+      },
+      {
+        category: "Mathematics",
+        type: "text-input",
+        question: "How many centimetres are there in 3.65 metres?",
+        acceptedAnswers: ["365", "365cm", "365 cm"],
+        explanation: "3.65 metres = 3.65 × 100 = 365 cm"
+      },
+      {
+        category: "Mathematics",
+        type: "multiple-choice",
+        question: "A rectangle has area 560 m². Its length is 28 m. What is its width?",
+        options: ["18 m", "20 m", "22 m", "24 m"],
+        correct: 1,
+        explanation: "Width = Area ÷ Length = 560 ÷ 28 = 20 m"
+      },
+      {
+        category: "Mathematics",
+        type: "text-input",
+        question: "A shop sells markers in packets of 15. If a class needs 187 markers, how many full packets must be bought?",
+        acceptedAnswers: ["13"],
+        explanation: "187 ÷ 15 = 12.47, so we need 13 packets (can't buy a fraction of a packet)"
+      },
+      {
+        category: "Mathematics",
+        type: "text-input",
+        question: "A girl saves £72 over 9 weeks, saving the same amount each week. How much does she save per week?",
+        acceptedAnswers: ["8", "£8"],
+        explanation: "£72 ÷ 9 weeks = £8 per week"
+      },
+      {
+        category: "Mathematics",
+        type: "text-input",
+        question: "What is the next number in the sequence: 2, 5, 11, 23, 47, ___",
+        acceptedAnswers: ["95"],
+        explanation: "Each number is double the previous plus 1: (2×2)+1=5, (5×2)+1=11, etc. So (47×2)+1=95"
+      },
+      {
+        category: "Mathematics",
+        type: "multiple-choice",
+        question: "A boy's average score for 5 attempts is 18. What is the total of his first 5 attempts?",
+        options: ["80", "85", "90", "95"],
+        correct: 2,
+        explanation: "Total = Average × Number of attempts = 18 × 5 = 90"
+      },
+      {
+        category: "Mathematics",
+        type: "text-input",
+        question: "The nth term of a sequence is 5n + 3. What is the 20th term?",
+        acceptedAnswers: ["103"],
+        explanation: "Substitute n=20: 5(20) + 3 = 100 + 3 = 103"
+      },
+      {
+        category: "Mathematics",
+        type: "multiple-choice",
+        question: "What is 45% of £240?",
+        options: ["£98", "£102", "£108", "£112"],
+        correct: 2,
+        explanation: "45% of £240 = 0.45 × 240 = £108"
+      },
+      {
+        category: "Mathematics",
+        type: "text-input",
+        question: "If 15% of X = 36, find X.",
+        acceptedAnswers: ["240"],
+        explanation: "X = 36 ÷ 0.15 = 240"
+      },
+      {
+        category: "Mathematics",
+        type: "text-input",
+        question: "A bicycle costs £180. It is reduced by 15% in a sale. What is the sale price?",
+        acceptedAnswers: ["153", "£153"],
+        explanation: "Sale price = £180 × 0.85 = £153 (or £180 - £27 = £153)"
+      },
+      {
+        category: "Mathematics",
+        type: "multiple-choice",
+        question: "Convert 7/8 to a decimal.",
+        options: ["0.75", "0.825", "0.875", "0.925"],
+        correct: 2,
+        explanation: "7 ÷ 8 = 0.875"
+      },
+      {
+        category: "Mathematics",
+        type: "text-input",
+        question: "A number divided by 8, then add 12, gives 27. What was the original number?",
+        acceptedAnswers: ["120"],
+        explanation: "(X ÷ 8) + 12 = 27, so X ÷ 8 = 15, therefore X = 120"
+      },
+      {
+        category: "Mathematics",
+        type: "multiple-choice",
+        question: "How many faces does a triangular prism have?",
+        options: ["3", "4", "5", "6"],
+        correct: 2,
+        explanation: "A triangular prism has 5 faces: 2 triangular ends and 3 rectangular sides"
+      },
+      {
+        category: "Mathematics",
+        type: "text-input",
+        question: "A regular hexagon has a perimeter of 48cm. What is the length of one side?",
+        acceptedAnswers: ["8", "8cm", "8 cm"],
+        explanation: "A hexagon has 6 sides. 48 ÷ 6 = 8cm per side"
+      },
+      {
+        category: "Mathematics",
+        type: "multiple-choice",
+        question: "In an isosceles triangle, two equal angles are each 68°. What is the third angle?",
+        options: ["42°", "44°", "46°", "48°"],
+        correct: 1,
+        explanation: "68° + 68° + C = 180°, so C = 180° - 136° = 44°"
+      },
+      {
+        category: "Mathematics",
+        type: "text-input",
+        question: "Emma multiplies a number by 23 and gets 391. What was the original number?",
+        acceptedAnswers: ["17"],
+        explanation: "391 ÷ 23 = 17"
+      },
+      {
+        category: "Mathematics",
+        type: "text-input",
+        question: "Jack squares his number and gets the same result as when he multiplies it by 15. What is his positive number?",
+        acceptedAnswers: ["15"],
+        explanation: "x² = 15x, so x² - 15x = 0, x(x-15) = 0. Since we want positive: x = 15"
+      },
+      {
+        category: "Mathematics",
+        type: "multiple-choice",
+        question: "Which is larger: 5/7 or 3/4?",
+        options: ["5/7", "3/4", "They are equal", "Cannot determine"],
+        correct: 1,
+        explanation: "5/7 ≈ 0.714, but 3/4 = 0.75, so 3/4 is larger"
+      },
+      {
+        category: "Mathematics",
+        type: "text-input",
+        question: "Write 0.625 as a fraction in simplest form.",
+        acceptedAnswers: ["5/8"],
+        explanation: "0.625 = 625/1000 = 5/8 (dividing both by 125)"
+      },
+      {
+        category: "Mathematics",
+        type: "multiple-choice",
+        question: "M rounds to 560 to the nearest 10. What is the largest possible value of M?",
+        options: ["559", "560", "564", "565"],
+        correct: 2,
+        explanation: "For M to round to 560, it must be 555-564. Largest is 564."
+      },
+      {
+        category: "Mathematics",
+        type: "text-input",
+        question: "A car uses 850 cm³ of fuel to travel 12 km. How far can it travel on 3400 cm³?",
+        acceptedAnswers: ["48", "48km", "48 km"],
+        explanation: "3400 ÷ 850 = 4 times as much fuel, so 4 × 12 km = 48 km"
       },
       
       // ENGLISH (20 questions)
