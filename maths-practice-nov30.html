@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maths Practice - Sunday 30th November | CRGS Prep</title>
+  <style>
+    :root {
+      --bg: #f0f4f8;
+      --card: #fff;
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --success: #10b981;
+      --error: #ef4444;
+      --muted: #6b7280;
+      --accent: #111827;
+      --border: #e5e7eb;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: var(--accent);
+      padding: 1rem;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 3px solid var(--primary);
+    }
+    
+    h1 {
+      margin: 0;
+      color: var(--primary);
+      font-size: 2rem;
+    }
+    
+    .exam-info {
+      margin-top: 0.5rem;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    
+    .timer {
+      background: var(--primary);
+      color: white;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      position: sticky;
+      top: 1rem;
+      z-index: 100;
+    }
+    
+    .timer.warning {
+      background: var(--error);
+      animation: pulse 1s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+    
+    .page-section {
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      background: #fafbfc;
+    }
+    
+    .page-header {
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+    
+    .question {
+      margin-bottom: 1.5rem;
+    }
+    
+    .question-number {
+      font-weight: bold;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    
+    .question-text {
+      margin-bottom: 0.8rem;
+      line-height: 1.6;
+    }
+    
+    .subquestion {
+      margin-left: 1.5rem;
+      margin-bottom: 0.8rem;
+    }
+    
+    input[type="text"], input[type="number"], textarea {
+      padding: 0.5rem;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      font-size: 1rem;
+      font-family: inherit;
+      width: 150px;
+      transition: border-color 0.2s;
+    }
+    
+    input[type="text"]:focus, input[type="number"]:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    
+    textarea {
+      width: 100%;
+      min-height: 80px;
+      resize: vertical;
+    }
+    
+    .wide-input {
+      width: 250px;
+    }
+    
+    .answer-box {
+      display: inline-block;
+      padding: 0.3rem 0.6rem;
+      background: white;
+      border: 2px dashed var(--border);
+      border-radius: 4px;
+      min-width: 120px;
+      text-align: center;
+    }
+    
+    .btn {
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 0.5rem;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+    }
+    
+    .btn-secondary {
+      background: var(--muted);
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background: #4b5563;
+    }
+    
+    .start-screen {
+      text-align: center;
+      padding: 2rem;
+    }
+    
+    .exam-container {
+      display: none;
+    }
+    
+    .exam-container.active {
+      display: block;
+    }
+    
+    .instructions {
+      background: #fff3cd;
+      border: 2px solid #ffc107;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+    
+    .instructions ul {
+      margin: 0.5rem 0;
+      padding-left: 1.5rem;
+    }
+    
+    .action-buttons {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid var(--border);
+    }
+    
+    @media print {
+      .timer, .action-buttons, .instructions {
+        display: none;
+      }
+      
+      body {
+        background: white;
+      }
+      
+      .container {
+        box-shadow: none;
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🔢 CRGS Maths Practice Test</h1>
+      <p class="exam-info">Sunday, 30th November 2024 | 60 minutes | 60 marks</p>
+    </header>
+
+    <!-- Start Screen -->
+    <div id="startScreen" class="start-screen">
+      <h2>Mock CSSE-Style Mathematics Paper</h2>
+      
+      <div class="instructions">
+        <h3 style="margin-top: 0;">Instructions:</h3>
+        <ul style="text-align: left;">
+          <li>You have <strong>60 minutes</strong> to complete this paper</li>
+          <li>Answer <strong>all questions</strong> in the spaces provided</li>
+          <li>Show your working where appropriate</li>
+          <li>Calculators are <strong>not permitted</strong></li>
+          <li>Write clearly and check your answers</li>
+          <li>Total marks available: <strong>60</strong></li>
+        </ul>
+      </div>
+      
+      <p style="font-size: 1.1rem; margin: 1.5rem 0;">When you're ready to begin, click the button below. The timer will start automatically.</p>
+      
+      <button class="btn btn-primary" onclick="startExam()">Start Exam</button>
+      <button class="btn btn-secondary" onclick="location.href='11plus.html'">Back to Practice Quiz</button>
+    </div>
+
+    <!-- Exam Container -->
+    <div id="examContainer" class="exam-container">
+      <div id="timer" class="timer">Time Remaining: 60:00</div>
+
+      <!-- Page 1 -->
+      <div class="page-section">
+        <div class="page-header">Page 1 — (7 marks)</div>
+        
+        <div class="question">
+          <div class="question-number">1. Calculate:</div>
+          
+          <div class="subquestion">
+            (a) 4289 + 578 = <input type="text" id="q1a">
+          </div>
+          
+          <div class="subquestion">
+            (b) 6042 – 495 = <input type="text" id="q1b">
+          </div>
+          
+          <div class="subquestion">
+            (c) 576 ÷ 9 = <input type="text" id="q1c">
+          </div>
+          
+          <div class="subquestion">
+            (d) 2/5 + 3/4 = <input type="text" id="q1d"> (Give answer as a simplified fraction)
+          </div>
+          
+          <div class="subquestion">
+            (e) (24 ÷ 4) × (35 ÷ 7) = <input type="text" id="q1e">
+          </div>
+          
+          <div class="subquestion">
+            (f) 3/5 ÷ 2/3 = <input type="text" id="q1f">
+          </div>
+          
+          <div class="subquestion">
+            (g) Write 0.625 as a fraction in simplest form. <input type="text" id="q1g">
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 2 -->
+      <div class="page-section">
+        <div class="page-header">Page 2 — (5 marks)</div>
+        
+        <div class="question">
+          <div class="question-number">2.</div>
+          
+          <div class="subquestion">
+            (a) How many centimetres are there in 3.65 metres?<br>
+            <input type="text" id="q2a"> cm
+          </div>
+          
+          <div class="subquestion">
+            (b) A rectangle has area 560 m². Its length is 28 m.<br>
+            What is its width?<br>
+            Width = <input type="text" id="q2b"> m
+          </div>
+          
+          <div class="subquestion">
+            (c) Find the mean of: 3/4, 5/6, 2/3<br>
+            Answer: <input type="text" id="q2c">
+          </div>
+          
+          <div class="subquestion">
+            (d) A shop sells markers in packets of 15.<br>
+            If a class needs 187 markers, how many full packets must be bought?<br>
+            <input type="text" id="q2d"> packets
+          </div>
+          
+          <div class="subquestion">
+            (e) A girl saves the same amount each week. After 9 weeks she has saved £72.<br>
+            How much does she save each week?<br>
+            £<input type="text" id="q2e">
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 3 -->
+      <div class="page-section">
+        <div class="page-header">Page 3 — (6 marks)</div>
+        
+        <div class="question">
+          <div class="question-text">In a game, a touchdown is worth 7 points and a field goal is worth 3 points.</div>
+          
+          <div class="subquestion">
+            (a) What is the lowest score that is impossible to achieve?<br>
+            <input type="text" id="q3a">
+          </div>
+          
+          <div class="subquestion">
+            (b) Write a score that can be achieved in two different ways.<br>
+            Score = <input type="text" id="q3b">
+          </div>
+          
+          <div class="subquestion">
+            (c) Find one way to score 41 points using any number of touchdowns and field goals.<br>
+            Touchdowns: <input type="text" id="q3c1" style="width: 80px;">
+            Field goals: <input type="text" id="q3c2" style="width: 80px;">
+          </div>
+          
+          <div class="subquestion">
+            (d) If Y = 4X and Z = X – 5, and X + Y + Z = 54, find the value of X.<br>
+            X = <input type="text" id="q3d">
+          </div>
+          
+          <div class="subquestion">
+            (e) Find Z.<br>
+            Z = <input type="text" id="q3e">
+          </div>
+          
+          <div class="subquestion">
+            (f) Find Y.<br>
+            Y = <input type="text" id="q3f">
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 4 -->
+      <div class="page-section">
+        <div class="page-header">Page 4 — (6 marks)</div>
+        
+        <div class="question">
+          <div class="question-number">4. Formula machines</div>
+          <div class="question-text">A machine works as follows: <strong>Multiply by 4 → add 15 → divide by 3</strong></div>
+          
+          <div class="subquestion">
+            (a) Input = 27<br>
+            Output = <input type="text" id="q4a">
+          </div>
+          
+          <div class="subquestion">
+            (b) Output = 23<br>
+            What was the input? <input type="text" id="q4b">
+          </div>
+          
+          <div class="subquestion">
+            (c) Find a negative number you can input so that the output equals the input.<br>
+            Input = <input type="text" id="q4c">
+          </div>
+        </div>
+        
+        <div class="question">
+          <div class="question-number">5. Table of values</div>
+          <div class="question-text">Complete the table for the formula 6n – 7:</div>
+          
+          <table style="border-collapse: collapse; margin: 1rem 0;">
+            <tr>
+              <th style="border: 1px solid var(--border); padding: 0.5rem; background: var(--bg);">n</th>
+              <th style="border: 1px solid var(--border); padding: 0.5rem; background: var(--bg);">6n – 7</th>
+            </tr>
+            <tr>
+              <td style="border: 1px solid var(--border); padding: 0.5rem; text-align: center;">1</td>
+              <td style="border: 1px solid var(--border); padding: 0.5rem;"><input type="text" id="q5a" style="width: 100%;"></td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid var(--border); padding: 0.5rem; text-align: center;">3</td>
+              <td style="border: 1px solid var(--border); padding: 0.5rem;"><input type="text" id="q5b" style="width: 100%;"></td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid var(--border); padding: 0.5rem; text-align: center;">8</td>
+              <td style="border: 1px solid var(--border); padding: 0.5rem;"><input type="text" id="q5c" style="width: 100%;"></td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid var(--border); padding: 0.5rem; text-align: center;">12</td>
+              <td style="border: 1px solid var(--border); padding: 0.5rem;"><input type="text" id="q5d" style="width: 100%;"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Page 5 -->
+      <div class="page-section">
+        <div class="page-header">Page 5 — (5 marks)</div>
+        
+        <div class="question">
+          <div class="question-number">6. Rounding</div>
+          <div class="question-text">M and N are whole numbers.</div>
+          <div class="question-text">M rounds to 560 to the nearest 10</div>
+          <div class="question-text">N rounds to 420 to the nearest 10</div>
+          
+          <div class="subquestion">
+            (a) Largest possible value of M = <input type="text" id="q6a">
+          </div>
+          
+          <div class="subquestion">
+            (b) Smallest possible value of N = <input type="text" id="q6b">
+          </div>
+          
+          <div class="subquestion">
+            (c) Largest possible value of M + N = <input type="text" id="q6c">
+          </div>
+          
+          <div class="subquestion">
+            (d) Smallest possible value of M – N = <input type="text" id="q6d">
+          </div>
+        </div>
+        
+        <div class="question">
+          <div class="question-number">7. Petrol question</div>
+          <div class="question-text">A car uses 850 cm³ of fuel to travel 12 km.</div>
+          
+          <div class="subquestion">
+            (a) How far can it travel on 3400 cm³?<br>
+            <input type="text" id="q7a"> km
+          </div>
+          
+          <div class="subquestion">
+            (b) How much fuel (in litres) is needed for 60 km?<br>
+            (1 litre = 1000 cm³)<br>
+            <input type="text" id="q7b"> litres
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 6 -->
+      <div class="page-section">
+        <div class="page-header">Page 6 — (5 marks)</div>
+        
+        <div class="question">
+          <div class="question-number">8. Averages</div>
+          <div class="question-text">A boy plays a game. His average score for 5 attempts is 18.</div>
+          
+          <div class="subquestion">
+            (a) What is the total of his first 5 attempts?<br>
+            <input type="text" id="q8a">
+          </div>
+          
+          <div class="subquestion">
+            (b) On the 6th attempt he scores 33.<br>
+            What is his new average?<br>
+            <input type="text" id="q8b">
+          </div>
+        </div>
+        
+        <div class="question">
+          <div class="question-number">9. Angles</div>
+          
+          <div class="subquestion">
+            (a) In an isosceles triangle, two sides are equal. If angle A = 68°, and sides A and B are equal, find angle C.<br>
+            Angle C = <input type="text" id="q9a"> °
+          </div>
+          
+          <div class="subquestion">
+            (b) If angle B = 62° and C = 74°, find angle A.<br>
+            Angle A = <input type="text" id="q9b"> °
+          </div>
+          
+          <div class="subquestion">
+            (c) Three lines meet at a point. Two angles shown are 110° and 95°. Find angle x.<br>
+            x = <input type="text" id="q9c"> °
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 7 -->
+      <div class="page-section">
+        <div class="page-header">Page 7 — (6 marks)</div>
+        
+        <div class="question">
+          <div class="question-number">10. True or false</div>
+          
+          <div class="subquestion">
+            (a) All multiples of 6 are even.
+            <select id="q10a" style="padding: 0.5rem; border: 2px solid var(--border); border-radius: 6px;">
+              <option value="">Select...</option>
+              <option value="true">True</option>
+              <option value="false">False</option>
+            </select>
+          </div>
+          
+          <div class="subquestion">
+            (b) Some square numbers are also triangular numbers.
+            <select id="q10b" style="padding: 0.5rem; border: 2px solid var(--border); border-radius: 6px;">
+              <option value="">Select...</option>
+              <option value="true">True</option>
+              <option value="false">False</option>
+            </select>
+          </div>
+          
+          <div class="subquestion">
+            (c) The mean of two even numbers is always even.
+            <select id="q10c" style="padding: 0.5rem; border: 2px solid var(--border); border-radius: 6px;">
+              <option value="">Select...</option>
+              <option value="true">True</option>
+              <option value="false">False</option>
+            </select>
+          </div>
+          
+          <div class="subquestion">
+            (d) The product of two odd numbers is always odd.
+            <select id="q10d" style="padding: 0.5rem; border: 2px solid var(--border); border-radius: 6px;">
+              <option value="">Select...</option>
+              <option value="true">True</option>
+              <option value="false">False</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="question">
+          <div class="question-number">11. Money</div>
+          <div class="question-text">A bicycle costs £180. In a sale it is reduced by 15%.<br>
+          A voucher gives a further 10% off the sale price.</div>
+          
+          <div class="subquestion">
+            (a) Sale price before voucher discount = £<input type="text" id="q11a">
+          </div>
+          
+          <div class="subquestion">
+            (b) Final price = £<input type="text" id="q11b">
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 8 -->
+      <div class="page-section">
+        <div class="page-header">Page 8 — (5 marks)</div>
+        
+        <div class="question">
+          <div class="question-text">The chart shows the number of books read by students in a week:</div>
+          <div class="question-text">Mon: 6, Tue: 10, Wed: 8, Thu: 12, Fri: 9, Sat: 15, Sun: 18</div>
+          
+          <div class="question-number">12.</div>
+          
+          <div class="subquestion">
+            (a) Total books read from Mon–Fri = <input type="text" id="q12a">
+          </div>
+          
+          <div class="subquestion">
+            (b) Mean books read for Thu, Fri, Sat = <input type="text" id="q12b">
+          </div>
+          
+          <div class="subquestion">
+            (c) Each weekday book earns 2 points and each weekend book earns 3 points.<br>
+            Total points for whole week = <input type="text" id="q12c">
+          </div>
+        </div>
+        
+        <div class="question">
+          <div class="question-number">13. Percentages</div>
+          
+          <div class="subquestion">
+            (a) Find 45% of £240.<br>
+            £<input type="text" id="q13a">
+          </div>
+          
+          <div class="subquestion">
+            (b) 15% of X = 36<br>
+            Find X.<br>
+            X = <input type="text" id="q13b">
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 9 -->
+      <div class="page-section">
+        <div class="page-header">Page 9 — (6 marks)</div>
+        
+        <div class="question">
+          <div class="question-number">14. Sequences</div>
+          
+          <div class="subquestion">
+            (a) What is the next number in the sequence: 2, 5, 11, 23, 47, ___<br>
+            <input type="text" id="q14a">
+          </div>
+          
+          <div class="subquestion">
+            (b) The nth term of a sequence is 5n + 3.<br>
+            What is the 20th term?<br>
+            <input type="text" id="q14b">
+          </div>
+          
+          <div class="subquestion">
+            (c) A sequence starts: 3, 7, 11, 15, 19...<br>
+            Write a formula for the nth term.<br>
+            <input type="text" id="q14c" class="wide-input">
+          </div>
+        </div>
+        
+        <div class="question">
+          <div class="question-number">15. Shapes</div>
+          
+          <div class="subquestion">
+            (a) How many faces does a triangular prism have?<br>
+            <input type="text" id="q15a">
+          </div>
+          
+          <div class="subquestion">
+            (b) A regular hexagon has a perimeter of 48cm.<br>
+            What is the length of one side?<br>
+            <input type="text" id="q15b"> cm
+          </div>
+          
+          <div class="subquestion">
+            (c) How many lines of symmetry does a regular octagon have?<br>
+            <input type="text" id="q15c">
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 10 -->
+      <div class="page-section">
+        <div class="page-header">Page 10 — (4 marks)</div>
+        
+        <div class="question">
+          <div class="question-text"><strong>A train timetable:</strong></div>
+          
+          <table style="border-collapse: collapse; margin: 1rem 0; width: 100%;">
+            <tr>
+              <th style="border: 1px solid var(--border); padding: 0.5rem; background: var(--bg);">Station</th>
+              <th style="border: 1px solid var(--border); padding: 0.5rem; background: var(--bg);">Morning</th>
+              <th style="border: 1px solid var(--border); padding: 0.5rem; background: var(--bg);">Afternoon</th>
+            </tr>
+            <tr>
+              <td style="border: 1px solid var(--border); padding: 0.5rem;">Oakville</td>
+              <td style="border: 1px solid var(--border); padding: 0.5rem; text-align: center;">08:15</td>
+              <td style="border: 1px solid var(--border); padding: 0.5rem; text-align: center;">13:42</td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid var(--border); padding: 0.5rem;">Riverside</td>
+              <td style="border: 1px solid var(--border); padding: 0.5rem; text-align: center;">08:58</td>
+              <td style="border: 1px solid var(--border); padding: 0.5rem; text-align: center;">14:20</td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid var(--border); padding: 0.5rem;">Brookhaven</td>
+              <td style="border: 1px solid var(--border); padding: 0.5rem; text-align: center;">09:37</td>
+              <td style="border: 1px solid var(--border); padding: 0.5rem; text-align: center;">15:08</td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid var(--border); padding: 0.5rem;">Hilltop</td>
+              <td style="border: 1px solid var(--border); padding: 0.5rem; text-align: center;">10:22</td>
+              <td style="border: 1px solid var(--border); padding: 0.5rem; text-align: center;">15:55</td>
+            </tr>
+          </table>
+          
+          <div class="question-number">16.</div>
+          
+          <div class="subquestion">
+            (a) Time from Oakville to Hilltop (morning):<br>
+            <input type="text" id="q16a1" style="width: 60px;"> hours
+            <input type="text" id="q16a2" style="width: 60px;"> minutes
+          </div>
+          
+          <div class="subquestion">
+            (b) How much longer does the afternoon train take from Riverside to Brookhaven than the morning train?<br>
+            <input type="text" id="q16b"> minutes
+          </div>
+          
+          <div class="subquestion">
+            (c) If someone takes the morning train to Brookhaven and waits for the afternoon train back to Oakville, how long can they spend in Brookhaven?<br>
+            <input type="text" id="q16c1" style="width: 60px;"> hours
+            <input type="text" id="q16c2" style="width: 60px;"> minutes
+          </div>
+          
+          <div class="subquestion">
+            (d) Express trains reduce the Hilltop → Oakville afternoon journey by 20%.<br>
+            Original time is from 15:55 back to 13:42 (2 hours 13 minutes = 133 minutes).<br>
+            New journey time = <input type="text" id="q16d"> minutes
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 11 -->
+      <div class="page-section">
+        <div class="page-header">Page 11 — (3 marks)</div>
+        
+        <div class="question">
+          <div class="question-number">17. Algebra</div>
+          
+          <div class="subquestion">
+            (a) These shapes have equal perimeter. Find x.<br>
+            Shape 1: sides (x + 3), (x + 3), (4x – 5), (4x – 5)<br>
+            Shape 2: all sides = 18<br>
+            x = <input type="text" id="q17a">
+          </div>
+          
+          <div class="subquestion">
+            (b) These rectangles have equal area. Find y.<br>
+            Rectangle 1: 6 × (4y)<br>
+            Rectangle 2: 18 × 12<br>
+            y = <input type="text" id="q17b">
+          </div>
+          
+          <div class="subquestion">
+            (c) Solve: 7m – 5 = 6m + 11<br>
+            m = <input type="text" id="q17c">
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 12 -->
+      <div class="page-section">
+        <div class="page-header">Page 12 — (7 marks)</div>
+        
+        <div class="question">
+          <div class="question-number">18. Problem solving</div>
+          
+          <div class="subquestion">
+            (a) Emma multiplies a number by 23 and gets 391.<br>
+            What was the original number?<br>
+            <input type="text" id="q18a">
+          </div>
+          
+          <div class="subquestion">
+            (b) Jack squares his number and gets the same as when he multiplies it by 15.<br>
+            What is his positive number?<br>
+            <input type="text" id="q18b">
+          </div>
+        </div>
+        
+        <div class="question">
+          <div class="question-number">19. Fractions and decimals</div>
+          
+          <div class="subquestion">
+            (a) Convert 7/8 to a decimal.<br>
+            <input type="text" id="q19a">
+          </div>
+          
+          <div class="subquestion">
+            (b) Which is larger: 5/7 or 3/4?<br>
+            <input type="text" id="q19b">
+          </div>
+          
+          <div class="subquestion">
+            (c) Arrange in order from smallest to largest: 0.6, 2/3, 5/8<br>
+            <input type="text" id="q19c" class="wide-input">
+          </div>
+        </div>
+        
+        <div class="question">
+          <div class="question-number">20. Challenge</div>
+          
+          <div class="subquestion">
+            (a) A number is divided by 8 and then 12 is added. The result is 27.<br>
+            What was the original number?<br>
+            <input type="text" id="q20a">
+          </div>
+          
+          <div class="subquestion">
+            (b) Write the missing digit: 5_4 is divisible by both 6 and 9.<br>
+            <input type="text" id="q20b" style="width: 60px;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button class="btn btn-primary" onclick="finishExam()">Finish & Review</button>
+        <button class="btn btn-secondary" onclick="if(confirm('Are you sure? Your answers will be lost.')) location.href='11plus.html'">Exit</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let timeRemaining = 60 * 60; // 60 minutes in seconds
+    let timerInterval;
+    
+    function startExam() {
+      document.getElementById('startScreen').style.display = 'none';
+      document.getElementById('examContainer').classList.add('active');
+      
+      // Start timer
+      timerInterval = setInterval(updateTimer, 1000);
+      updateTimer();
+    }
+    
+    function updateTimer() {
+      const minutes = Math.floor(timeRemaining / 60);
+      const seconds = timeRemaining % 60;
+      
+      const display = `Time Remaining: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+      const timerEl = document.getElementById('timer');
+      timerEl.textContent = display;
+      
+      if (timeRemaining <= 300) { // Last 5 minutes
+        timerEl.classList.add('warning');
+      }
+      
+      if (timeRemaining <= 0) {
+        clearInterval(timerInterval);
+        alert('Time is up! Please finish your exam.');
+        timerEl.textContent = 'Time is up!';
+      } else {
+        timeRemaining--;
+      }
+    }
+    
+    function finishExam() {
+      clearInterval(timerInterval);
+      
+      const timeTaken = 60 * 60 - timeRemaining;
+      const minutesTaken = Math.floor(timeTaken / 60);
+      const secondsTaken = timeTaken % 60;
+      
+      const answeredCount = countAnsweredQuestions();
+      
+      if (answeredCount < 60 && !confirm(`You've answered ${answeredCount} out of 60 questions. Are you sure you want to finish?`)) {
+        // Resume timer
+        timerInterval = setInterval(updateTimer, 1000);
+        return;
+      }
+      
+      alert(`Exam completed!\n\nTime taken: ${minutesTaken} minutes ${secondsTaken} seconds\nQuestions answered: ${answeredCount}/60\n\nYour answers have been saved. You can now review them or compare with the mark scheme.`);
+      
+      // You could add auto-grading here in future
+      // For now, students can check their own answers against the mark scheme
+    }
+    
+    function countAnsweredQuestions() {
+      const inputs = document.querySelectorAll('input[type="text"], input[type="number"], select');
+      let count = 0;
+      inputs.forEach(input => {
+        if (input.value && input.value.trim() !== '') {
+          count++;
+        }
+      });
+      return count;
+    }
+    
+    // Auto-save answers to localStorage
+    setInterval(() => {
+      const inputs = document.querySelectorAll('input[type="text"], input[type="number"], select');
+      const answers = {};
+      inputs.forEach(input => {
+        if (input.id) {
+          answers[input.id] = input.value;
+        }
+      });
+      localStorage.setItem('mathsPracticeNov30', JSON.stringify(answers));
+    }, 5000); // Save every 5 seconds
+    
+    // Load saved answers on page load
+    window.addEventListener('load', () => {
+      const saved = localStorage.getItem('mathsPracticeNov30');
+      if (saved) {
+        const answers = JSON.parse(saved);
+        Object.keys(answers).forEach(id => {
+          const input = document.getElementById(id);
+          if (input) {
+            input.value = answers[id];
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
+
