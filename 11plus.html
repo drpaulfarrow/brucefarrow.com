@@ -457,7 +457,7 @@
     <!-- Welcome Screen -->
     <div id="welcomeScreen" class="welcome-screen">
       <h2>Welcome to Your 11+ Practice!</h2>
-      <p>This interactive quiz will help you prepare for the 11+ entrance exam with questions across four key areas:</p>
+      <p>This challenging quiz features CRGS-level questions across four key areas. Test your skills and build confidence for the entrance exam:</p>
       
       <div class="topic-grid">
         <div class="topic-card">
@@ -479,7 +479,7 @@
       </div>
       
       <p><strong>How it works:</strong></p>
-      <p>Answer 15 questions, get instant feedback, and see your score at the end. Good luck!</p>
+      <p>Answer 18 challenging questions, get instant feedback with detailed explanations, and see your score at the end. These questions are designed to match the difficulty level of CRGS entrance exams. Good luck!</p>
       
       <button class="btn btn-primary" onclick="startQuiz()">Start Practice Quiz</button>
     </div>
@@ -490,7 +490,7 @@
       <div class="progress-bar">
         <div class="progress-info">
           <span>Progress</span>
-          <span id="progressText">0/15</span>
+          <span id="progressText">0/18</span>
         </div>
         <div class="progress-track">
           <div id="progressFill" class="progress-fill"></div>
@@ -545,124 +545,159 @@
   </div>
 
   <script>
-    // Quiz questions database
+    // Quiz questions database - CRGS Level
     const questions = [
-      // Verbal Reasoning
+      // Verbal Reasoning - Advanced
       {
         category: "Verbal Reasoning",
-        question: "Find the word that means the same as 'RAPID':",
-        options: ["Slow", "Quick", "Careful", "Loud"],
+        question: "If MINCE is to CHIME, then TEACH is to which word?",
+        options: ["CHEAT", "CHEAP", "PEACH", "BEACH"],
         correct: 1,
-        explanation: "RAPID means fast or quick. They are synonyms."
+        explanation: "MINCE rearranged gives CHIME. Similarly, TEACH rearranged gives CHEAP."
       },
       {
         category: "Verbal Reasoning",
-        question: "Complete the analogy: CAT is to KITTEN as DOG is to ___",
-        options: ["Puppy", "Pet", "Bone", "Bark"],
+        question: "Complete: ARDENT is to PASSION as TACITURN is to ___",
+        options: ["Talkative", "Silence", "Energetic", "Friendly"],
+        correct: 1,
+        explanation: "ARDENT means showing passion. TACITURN means inclined to silence or reserved in speech."
+      },
+      {
+        category: "Verbal Reasoning",
+        question: "Find the two words (one from each group) that complete the sentence: (PLUMP, SKINNY, TALL) is to FAT as (SMALL, THIN, NARROW) is to ___",
+        options: ["PLUMP-THIN", "SKINNY-NARROW", "PLUMP-SMALL", "TALL-NARROW"],
         correct: 0,
-        explanation: "A kitten is a baby cat, just as a puppy is a baby dog."
+        explanation: "PLUMP means the same as FAT, and THIN is the opposite relationship to SMALL (both indicate lack of size in one dimension)."
       },
       {
         category: "Verbal Reasoning",
-        question: "Which word is the odd one out?",
-        options: ["Apple", "Banana", "Carrot", "Orange"],
+        question: "What letter comes next in this sequence? A, C, F, J, O, ___",
+        options: ["S", "T", "U", "V"],
         correct: 2,
-        explanation: "Carrot is a vegetable, while the others are fruits."
+        explanation: "The gaps increase by 1 each time: +2, +3, +4, +5, +6 = U"
+      },
+      {
+        category: "Verbal Reasoning",
+        question: "Which word does NOT belong? Benevolent, Malicious, Generous, Charitable, Kind",
+        options: ["Benevolent", "Malicious", "Generous", "Charitable"],
+        correct: 1,
+        explanation: "Malicious means intending harm, while all others relate to kindness and generosity."
       },
       
-      // Mathematics
+      // Mathematics - Advanced
       {
         category: "Mathematics",
-        question: "What is 15% of 200?",
-        options: ["20", "25", "30", "35"],
+        question: "A book costs £12.50 after a 20% discount. What was the original price?",
+        options: ["£14.50", "£15.00", "£15.50", "£15.625"],
+        correct: 3,
+        explanation: "If it's 80% of the original (after 20% off), then: £12.50 ÷ 0.8 = £15.625"
+      },
+      {
+        category: "Mathematics",
+        question: "If 3x + 7 = 28, what is the value of x?",
+        options: ["5", "6", "7", "8"],
         correct: 2,
-        explanation: "15% of 200 = (15/100) × 200 = 30"
+        explanation: "3x + 7 = 28, so 3x = 21, therefore x = 7"
       },
       {
         category: "Mathematics",
-        question: "If a train travels 120 miles in 2 hours, what is its average speed?",
-        options: ["50 mph", "60 mph", "70 mph", "80 mph"],
+        question: "What is the next number in the sequence? 1, 4, 9, 16, 25, 36, ___",
+        options: ["42", "45", "47", "49"],
+        correct: 3,
+        explanation: "These are square numbers: 1², 2², 3², 4², 5², 6², 7² = 49"
+      },
+      {
+        category: "Mathematics",
+        question: "A train leaves at 08:45 and arrives at 13:20. If it travels 270 miles, what is its average speed?",
+        options: ["54 mph", "60 mph", "63 mph", "67.5 mph"],
         correct: 1,
-        explanation: "Speed = Distance ÷ Time = 120 ÷ 2 = 60 mph"
+        explanation: "Journey time: 4 hours 35 minutes = 4.583 hours. Speed = 270 ÷ 4.583 ≈ 59 mph, closest to 60 mph"
       },
       {
         category: "Mathematics",
-        question: "What is the next number in the sequence: 2, 5, 11, 23, ___",
-        options: ["35", "41", "47", "53"],
-        correct: 2,
-        explanation: "Each number is double the previous number plus 1: (2×2)+1=5, (5×2)+1=11, (11×2)+1=23, (23×2)+1=47"
-      },
-      {
-        category: "Mathematics",
-        question: "A rectangle has a length of 12cm and a width of 7cm. What is its perimeter?",
-        options: ["19cm", "38cm", "84cm", "44cm"],
+        question: "A rectangle's length is twice its width. If the perimeter is 48cm, what is the area?",
+        options: ["96 cm²", "128 cm²", "144 cm²", "192 cm²"],
         correct: 1,
-        explanation: "Perimeter = 2(length + width) = 2(12 + 7) = 2 × 19 = 38cm"
+        explanation: "Let width = w, length = 2w. Perimeter: 2(w + 2w) = 48, so 6w = 48, w = 8. Length = 16. Area = 8 × 16 = 128 cm²"
+      },
+      {
+        category: "Mathematics",
+        question: "What is 3/4 of 2/3 of 180?",
+        options: ["80", "90", "100", "120"],
+        correct: 1,
+        explanation: "2/3 of 180 = 120. Then 3/4 of 120 = 90"
       },
       
-      // English
+      // English - Advanced
       {
         category: "English",
-        question: "Which sentence uses the correct punctuation?",
+        question: "Which sentence uses semicolons correctly?",
         options: [
-          "Its a beautiful day outside.",
-          "It's a beautiful day outside.",
-          "Its' a beautiful day outside.",
-          "Its a beautiful day, outside."
+          "I went to the shop; bought milk, bread; and cheese.",
+          "The trip includes visits to Paris, France; Rome, Italy; and Berlin, Germany.",
+          "She likes reading; but not writing.",
+          "The cat; which was black; sat on the mat."
         ],
         correct: 1,
-        explanation: "It's (with an apostrophe) is the contraction of 'it is'."
+        explanation: "Semicolons separate complex list items that already contain commas, making the list clearer."
       },
       {
         category: "English",
-        question: "Choose the correct spelling:",
-        options: ["Accommodate", "Acommodate", "Accomodate", "Acomodate"],
-        correct: 0,
-        explanation: "The correct spelling is 'Accommodate' with double 'c' and double 'm'."
+        question: "Choose the word that best fits: Despite the _____ evidence, the jury remained unconvinced.",
+        options: ["ambiguous", "compelling", "dubious", "scarce"],
+        correct: 1,
+        explanation: "Compelling means convincing. The contrast with 'Despite' and 'unconvinced' suggests strong evidence that didn't work."
       },
       {
         category: "English",
-        question: "What type of word is 'quickly'?",
-        options: ["Noun", "Verb", "Adjective", "Adverb"],
-        correct: 3,
-        explanation: "Quickly is an adverb - it describes how an action is performed."
+        question: "Identify the error: 'Neither the teacher nor the students was ready for the test.'",
+        options: ["Neither", "nor", "was", "No error"],
+        correct: 2,
+        explanation: "Should be 'were' not 'was'. With 'neither...nor', the verb agrees with the nearest subject (students = plural)."
       },
       {
         category: "English",
-        question: "Which word best completes the sentence? 'The athlete ran ___ to win the race.'",
-        options: ["slow", "slower", "slowest", "swiftly"],
-        correct: 3,
-        explanation: "Swiftly (quickly) makes the most sense in context of winning a race."
+        question: "What is the meaning of the prefix 'circum-' in 'circumnavigate'?",
+        options: ["Above", "Around", "Through", "Across"],
+        correct: 1,
+        explanation: "Circum- means around. Circumnavigate means to sail around (like around the world)."
       },
       
-      // Non-Verbal Reasoning
+      // Non-Verbal Reasoning - Advanced
       {
         category: "Non-Verbal Reasoning",
-        question: "A cube is rotated 90° clockwise. Which face will be on top?",
-        options: ["The same face", "The opposite face", "The adjacent face", "Cannot determine"],
-        correct: 2,
-        explanation: "When a cube rotates 90°, an adjacent face moves to the top position."
-      },
-      {
-        category: "Non-Verbal Reasoning",
-        question: "If a shape has 4 equal sides and 4 right angles, what is it?",
-        options: ["Rectangle", "Square", "Rhombus", "Trapezium"],
+        question: "In a 3×3 grid, if each row and column must sum to 15 using numbers 1-9 (each once), and the center is 5, what must the corners add up to?",
+        options: ["16", "20", "24", "28"],
         correct: 1,
-        explanation: "A square has 4 equal sides and 4 right angles."
+        explanation: "In a magic square with sum 15, the corners must sum to 20 (this is a property of 3×3 magic squares)."
       },
       {
         category: "Non-Verbal Reasoning",
-        question: "How many lines of symmetry does a regular hexagon have?",
-        options: ["3", "4", "6", "8"],
-        correct: 2,
-        explanation: "A regular hexagon has 6 lines of symmetry."
+        question: "Complete the pattern: 2, 6, 12, 20, 30, ___",
+        options: ["40", "42", "44", "48"],
+        correct: 1,
+        explanation: "These are 1×2, 2×3, 3×4, 4×5, 5×6, so next is 6×7 = 42"
       },
       {
         category: "Non-Verbal Reasoning",
-        question: "What is the missing number in the pattern: 3, 6, 12, 24, ___",
-        options: ["36", "42", "48", "54"],
-        correct: 2,
-        explanation: "Each number is doubled: 3×2=6, 6×2=12, 12×2=24, 24×2=48"
+        question: "A cube has numbers 1-6 on its faces. Face 1 is opposite face 6, face 2 opposite face 5. If faces 1, 2, and 3 meet at a corner, what number is opposite face 3?",
+        options: ["3", "4", "5", "6"],
+        correct: 1,
+        explanation: "Since 1-6 and 2-5 are opposite pairs, the remaining pair must be 3-4."
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "If a clock shows 3:15, what is the angle between the hour and minute hands?",
+        options: ["0°", "7.5°", "15°", "22.5°"],
+        correct: 1,
+        explanation: "At 3:15, the minute hand is at 90° (pointing at 3). The hour hand has moved 1/4 of the way from 3 to 4 (7.5°). Angle = 90° - 82.5° = 7.5°"
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "How many cubes are needed to build a solid 3×3×3 cube if the center cube is missing?",
+        options: ["26", "27", "28", "29"],
+        correct: 0,
+        explanation: "A 3×3×3 cube has 27 cubes total. Minus the center cube = 26 cubes."
       }
     ];
 
