@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>11+ Practice | Colchester Royal Grammar School</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     /* --- Basic page layout --- */
     :root {
@@ -274,6 +275,62 @@
       color: var(--primary);
     }
     
+    /* Text input questions */
+    .text-input-area {
+      margin-top: 1.5rem;
+    }
+    
+    .text-input {
+      width: 100%;
+      padding: 1rem;
+      border: 3px solid var(--border);
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-family: inherit;
+      transition: border-color 0.2s ease;
+      resize: vertical;
+      min-height: 60px;
+    }
+    
+    .text-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    
+    .text-input.correct-input {
+      border-color: var(--success);
+      background: #d1fae5;
+    }
+    
+    .text-input.incorrect-input {
+      border-color: var(--error);
+      background: #fee2e2;
+    }
+    
+    .submit-answer-btn {
+      margin-top: 1rem;
+      padding: 0.8rem 2rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .submit-answer-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    
+    .submit-answer-btn:disabled {
+      background: var(--muted);
+      cursor: not-allowed;
+      transform: none;
+    }
+    
     .feedback {
       margin-top: 1.5rem;
       padding: 1rem;
@@ -451,6 +508,22 @@
       background: var(--primary-dark);
     }
     
+    /* Pie chart */
+    .chart-container {
+      max-width: 400px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      background: var(--bg);
+      border-radius: 12px;
+    }
+    
+    .chart-title {
+      text-align: center;
+      color: var(--primary);
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    
     /* Animations */
     @keyframes correctPulse {
       0%, 100% { transform: scale(1); }
@@ -616,6 +689,11 @@
         </div>
       </div>
       
+      <div class="chart-container">
+        <div class="chart-title">Performance by Category</div>
+        <canvas id="pieChart"></canvas>
+      </div>
+      
       <button class="toggle-review" onclick="toggleReview()">📝 View Detailed Review</button>
       
       <div id="reviewSection" class="review-section" style="display: none;">
@@ -636,6 +714,7 @@
       // VERBAL REASONING (20 questions)
       {
         category: "Verbal Reasoning",
+        type: "multiple-choice",
         question: "Complete the analogy: BRAVE is to COWARDLY as GENEROUS is to ___",
         options: ["Kind", "Selfish", "Friendly", "Helpful"],
         correct: 1,
@@ -643,6 +722,14 @@
       },
       {
         category: "Verbal Reasoning",
+        type: "text-input",
+        question: "Rearrange the letters SILENT to make another word:",
+        acceptedAnswers: ["listen", "LISTEN", "Listen", "enlist", "ENLIST", "Enlist", "tinsel", "TINSEL", "Tinsel"],
+        explanation: "SILENT can be rearranged to make LISTEN, ENLIST, or TINSEL."
+      },
+      {
+        category: "Verbal Reasoning",
+        type: "multiple-choice",
         question: "Which word means the opposite of ANCIENT?",
         options: ["Old", "Modern", "Historical", "Traditional"],
         correct: 1,
@@ -778,6 +865,7 @@
       // MATHEMATICS (25 questions)
       {
         category: "Mathematics",
+        type: "multiple-choice",
         question: "What is 25% of 80?",
         options: ["15", "18", "20", "25"],
         correct: 2,
@@ -785,6 +873,14 @@
       },
       {
         category: "Mathematics",
+        type: "text-input",
+        question: "If a rectangle has a length of 9cm and a width of 4cm, what is its perimeter in cm? (Write just the number)",
+        acceptedAnswers: ["26", "26cm", "26 cm"],
+        explanation: "Perimeter = 2(length + width) = 2(9 + 4) = 2 × 13 = 26cm"
+      },
+      {
+        category: "Mathematics",
+        type: "multiple-choice",
         question: "If 5x = 35, what is x?",
         options: ["5", "6", "7", "8"],
         correct: 2,
@@ -955,6 +1051,7 @@
       // ENGLISH (20 questions)
       {
         category: "English",
+        type: "multiple-choice",
         question: "Which sentence is grammatically correct?",
         options: [
           "The team are playing well today.",
@@ -967,6 +1064,14 @@
       },
       {
         category: "English",
+        type: "text-input",
+        question: "Write the plural form of the word 'child':",
+        acceptedAnswers: ["children", "Children", "CHILDREN"],
+        explanation: "The plural of 'child' is 'children' (irregular plural)."
+      },
+      {
+        category: "English",
+        type: "multiple-choice",
         question: "Choose the correct spelling:",
         options: ["Definately", "Definatly", "Definitely", "Definetely"],
         correct: 2,
@@ -1112,6 +1217,14 @@
       // NON-VERBAL REASONING (20 questions)
       {
         category: "Non-Verbal Reasoning",
+        type: "text-input",
+        question: "What number comes next in this sequence: 3, 7, 15, 31, ___? (Write just the number)",
+        acceptedAnswers: ["63"],
+        explanation: "Each number is double the previous plus 1: (3×2)+1=7, (7×2)+1=15, (15×2)+1=31, (31×2)+1=63"
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        type: "multiple-choice",
         question: "What comes next? 2, 4, 8, 16, ___",
         options: ["24", "28", "32", "36"],
         correct: 2,
@@ -1119,6 +1232,7 @@
       },
       {
         category: "Non-Verbal Reasoning",
+        type: "multiple-choice",
         question: "How many sides does an octagon have?",
         options: ["6", "7", "8", "9"],
         correct: 2,
@@ -1285,6 +1399,11 @@
       const question = questions[currentQuestion];
       answered = false;
       
+      // Default type to multiple-choice if not specified
+      if (!question.type) {
+        question.type = 'multiple-choice';
+      }
+      
       // Update progress
       document.getElementById('progressText').textContent = `${currentQuestion + 1}/${questions.length}`;
       document.getElementById('progressFill').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
@@ -1294,20 +1413,41 @@
       document.getElementById('questionNumber').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
       document.getElementById('questionText').textContent = question.question;
       
-      // Create options
+      // Create options or text input based on question type
       const optionsContainer = document.getElementById('options');
       optionsContainer.innerHTML = '';
       
-      question.options.forEach((option, index) => {
-        const optionDiv = document.createElement('div');
-        optionDiv.className = 'option';
-        optionDiv.innerHTML = `
-          <span class="option-letter">${String.fromCharCode(65 + index)}</span>
-          ${option}
+      if (question.type === 'text-input') {
+        // Create text input
+        const inputArea = document.createElement('div');
+        inputArea.className = 'text-input-area';
+        inputArea.innerHTML = `
+          <input type="text" id="textAnswer" class="text-input" placeholder="Type your answer here..." />
+          <button class="submit-answer-btn" onclick="submitTextAnswer()">Submit Answer</button>
         `;
-        optionDiv.onclick = () => selectAnswer(index);
-        optionsContainer.appendChild(optionDiv);
-      });
+        optionsContainer.appendChild(inputArea);
+        
+        // Focus the input
+        setTimeout(() => {
+          document.getElementById('textAnswer').focus();
+          // Allow Enter key to submit
+          document.getElementById('textAnswer').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') submitTextAnswer();
+          });
+        }, 100);
+      } else {
+        // Create multiple choice options
+        question.options.forEach((option, index) => {
+          const optionDiv = document.createElement('div');
+          optionDiv.className = 'option';
+          optionDiv.innerHTML = `
+            <span class="option-letter">${String.fromCharCode(65 + index)}</span>
+            ${option}
+          `;
+          optionDiv.onclick = () => selectAnswer(index);
+          optionsContainer.appendChild(optionDiv);
+        });
+      }
       
       // Hide feedback and next button
       document.getElementById('feedback').classList.remove('show', 'correct', 'incorrect');
@@ -1358,6 +1498,61 @@
       // Show next button
       document.getElementById('nextBtn').style.display = 'inline-block';
     }
+    
+    function submitTextAnswer() {
+      if (answered) return;
+      
+      const textInput = document.getElementById('textAnswer');
+      const userAnswer = textInput.value.trim();
+      
+      if (!userAnswer) {
+        alert('Please enter an answer');
+        return;
+      }
+      
+      answered = true;
+      const question = questions[currentQuestion];
+      
+      // Check if answer is correct (case-insensitive match with any accepted answer)
+      const isCorrect = question.acceptedAnswers.some(ans => 
+        ans.toLowerCase() === userAnswer.toLowerCase()
+      );
+      
+      // Get the first accepted answer as the "correct answer" for display
+      const correctAnswer = question.acceptedAnswers[0];
+      
+      // Record this answer in history
+      answerHistory.push({
+        questionNumber: currentQuestion + 1,
+        category: question.category,
+        question: question.question,
+        selectedAnswer: userAnswer,
+        correctAnswer: correctAnswer,
+        isCorrect: isCorrect,
+        explanation: question.explanation
+      });
+      
+      if (isCorrect) {
+        score++;
+      }
+      
+      // Update UI
+      textInput.disabled = true;
+      textInput.classList.add(isCorrect ? 'correct-input' : 'incorrect-input');
+      document.querySelector('.submit-answer-btn').disabled = true;
+      
+      // Show feedback
+      const feedback = document.getElementById('feedback');
+      feedback.className = 'feedback show ' + (isCorrect ? 'correct' : 'incorrect');
+      feedback.innerHTML = `
+        <strong>${isCorrect ? '✓ Correct!' : '✗ Incorrect'}</strong>
+        ${!isCorrect ? `<div>Your answer: ${userAnswer}</div><div>Correct answer: ${correctAnswer}</div>` : ''}
+        ${question.explanation}
+      `;
+      
+      // Show next button
+      document.getElementById('nextBtn').style.display = 'inline-block';
+    }
 
     function nextQuestion() {
       currentQuestion++;
@@ -1396,7 +1591,90 @@
       // Populate review section
       populateReview();
       
+      // Create pie chart
+      createPieChart();
+      
       resultsScreen.classList.add('show');
+    }
+    
+    function createPieChart() {
+      // Calculate performance by category
+      const categoryStats = {};
+      
+      answerHistory.forEach(item => {
+        if (!categoryStats[item.category]) {
+          categoryStats[item.category] = { correct: 0, total: 0 };
+        }
+        categoryStats[item.category].total++;
+        if (item.isCorrect) {
+          categoryStats[item.category].correct++;
+        }
+      });
+      
+      // Prepare data for chart
+      const labels = [];
+      const correctData = [];
+      const incorrectData = [];
+      const colors = {
+        'Verbal Reasoning': '#3b82f6',
+        'Mathematics': '#10b981',
+        'English': '#f59e0b',
+        'Non-Verbal Reasoning': '#8b5cf6'
+      };
+      
+      Object.keys(categoryStats).forEach(category => {
+        labels.push(category);
+        correctData.push(categoryStats[category].correct);
+        incorrectData.push(categoryStats[category].total - categoryStats[category].correct);
+      });
+      
+      // Destroy existing chart if it exists
+      const existingChart = Chart.getChart('pieChart');
+      if (existingChart) {
+        existingChart.destroy();
+      }
+      
+      // Create pie chart showing correct answers by category
+      const ctx = document.getElementById('pieChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: labels.map((label, index) => 
+            `${label}: ${correctData[index]}/${categoryStats[label].total}`
+          ),
+          datasets: [{
+            label: 'Correct Answers',
+            data: correctData.map((correct, index) => 
+              Math.round((correct / categoryStats[labels[index]].total) * 100)
+            ),
+            backgroundColor: labels.map(label => colors[label] || '#6b7280'),
+            borderWidth: 2,
+            borderColor: '#ffffff'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                padding: 15,
+                font: {
+                  size: 12
+                }
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return context.label + ': ' + context.parsed + '%';
+                }
+              }
+            }
+          }
+        }
+      });
     }
     
     function populateReview() {
@@ -1433,6 +1711,12 @@
     }
 
     function restartQuiz() {
+      // Destroy the chart
+      const existingChart = Chart.getChart('pieChart');
+      if (existingChart) {
+        existingChart.destroy();
+      }
+      
       document.getElementById('resultsScreen').classList.remove('show');
       document.getElementById('resultsScreen').style.display = 'none';
       document.getElementById('reviewSection').style.display = 'none';
