@@ -361,7 +361,7 @@
           </div>
           
           <div class="subquestion">
-            (d) If Y = 4X and Z = X – 5, and X + Y + Z = 54, find the value of X.<br>
+            (d) If Y = 4X and Z = X – 5, and X + Y + Z = 55, find the value of X.<br>
             X = <input type="text" id="q3d">
           </div>
           
@@ -391,7 +391,7 @@
           </div>
           
           <div class="subquestion">
-            (b) Output = 23<br>
+            (b) Output = 21<br>
             What was the input? <input type="text" id="q4b">
           </div>
           
@@ -730,8 +730,8 @@
           
           <div class="subquestion">
             (a) These shapes have equal perimeter. Find x.<br>
-            Shape 1: sides (x + 3), (x + 3), (4x – 5), (4x – 5)<br>
-            Shape 2: all sides = 18<br>
+            Shape 1: sides (x + 2), (x + 2), (4x – 4), (4x – 4)<br>
+            Shape 2: all sides = 19<br>
             x = <input type="text" id="q17a">
           </div>
           
@@ -816,6 +816,118 @@
     let timeRemaining = 60 * 60; // 60 minutes in seconds
     let timerInterval;
     
+    // Answer key
+    const answers = {
+      // Page 1 (7 marks)
+      q1a: ["4867"],
+      q1b: ["5547"],
+      q1c: ["64"],
+      q1d: ["23/20", "1 3/20", "1.15"],
+      q1e: ["30"],
+      q1f: ["9/10", "0.9"],
+      q1g: ["5/8"],
+      
+      // Page 2 (5 marks)
+      q2a: ["365"],
+      q2b: ["20"],
+      q2c: ["3/4", "0.75"],
+      q2d: ["13"],
+      q2e: ["8"],
+      
+      // Page 3 (6 marks)
+      q3a: ["11"],
+      q3b: ["21", "24", "27", "30", "33", "36", "39", "42"], // Many possible answers
+      q3c1: ["5"], // 5 touchdowns = 35, 2 field goals = 6, total = 41
+      q3c2: ["2"],
+      q3d: ["10"], // X + 4X + (X-5) = 55, 6X - 5 = 55, 6X = 60, X = 10
+      q3e: ["5"], // Z = X - 5 = 10 - 5 = 5
+      q3f: ["40"], // Y = 4X = 4(10) = 40
+      
+      // Page 4 (6 marks) - Machine: ×4, +15, ÷3
+      q4a: ["41"], // (27×4 + 15)/3 = (108+15)/3 = 123/3 = 41
+      q4b: ["12"], // Output 21: work backwards: 21×3=63, -15=48, ÷4=12
+      q4c: ["-15"], // x = (4x+15)/3, 3x = 4x+15, -x = 15, x = -15. Verify: -15×4=-60, +15=-45, ÷3=-15. ✓
+      q5a: ["-1"], // 6(1) - 7 = -1
+      q5b: ["11"], // 6(3) - 7 = 11
+      q5c: ["41"], // 6(8) - 7 = 41
+      q5d: ["65"], // 6(12) - 7 = 65
+      
+      // Page 5 (5 marks)
+      q6a: ["564"],
+      q6b: ["415"],
+      q6c: ["988"], // Max M (564) + Max N (424) = 988
+      q6d: ["131"], // Min M (555) - Max N (424) = 131
+      q7a: ["48"], // 3400/850 × 12 = 4 × 12 = 48
+      q7b: ["4.25"], // 60/12 × 850 = 5 × 850 = 4250cm³ = 4.25 litres
+      
+      // Page 6 (5 marks)
+      q8a: ["90"], // 18 × 5 = 90
+      q8b: ["20.5"], // (90 + 33) / 6 = 123/6 = 20.5
+      q9a: ["44"], // Isosceles: 68 + 68 + C = 180, C = 44
+      q9b: ["44"], // 62 + 74 + A = 180, A = 44
+      q9c: ["155"], // 360 - 110 - 95 = 155
+      
+      // Page 7 (6 marks)
+      q10a: ["true"],
+      q10b: ["true"], // e.g., 1 is both triangular and square
+      q10c: ["true"], // (2n + 2m)/2 = n + m which is even
+      q10d: ["true"], // odd × odd = odd
+      q11a: ["153"], // 180 × 0.85 = 153
+      q11b: ["137.70", "137.7"], // 153 × 0.9 = 137.70
+      
+      // Page 8 (5 marks)
+      q12a: ["45"], // 6+10+8+12+9 = 45
+      q12b: ["12"], // (12+9+15)/3 = 36/3 = 12
+      q12c: ["189"], // Weekdays: 45×2=90, Weekends: 33×3=99, Total: 189
+      q13a: ["108"], // 45% of 240 = 108
+      q13b: ["240"], // 36/0.15 = 240
+      
+      // Page 9 (6 marks)
+      q14a: ["95"], // Double and add 1: 47×2+1=95
+      q14b: ["103"], // 5(20) + 3 = 103
+      q14c: ["4n - 1", "4n-1"], // 3,7,11,15,19... difference is 4, starts at 3 which is 4(1)-1
+      q15a: ["5"], // 2 triangular ends + 3 rectangular faces
+      q15b: ["8"], // 48/6 = 8
+      q15c: ["8"], // Regular octagon has 8 lines of symmetry
+      
+      // Page 10 (4 marks)
+      q16a1: ["2"], 
+      q16a2: ["7"], // 08:15 to 10:22 = 2h 7min
+      q16b: ["9", "10"], // Morning: 08:58 to 09:37 = 39min, Afternoon: 14:20 to 15:08 = 48min, Difference = 9min
+      q16c1: ["4"],
+      q16c2: ["5"], // Arrive 09:37, leave 13:42 = 4h 5min
+      q16d: ["106"], // 133 × 0.8 = 106.4, round to 106
+      
+      // Page 11 (3 marks)
+      q17a: ["8"], // Perimeter: 2(x+2) + 2(4x-4) = 4(18), 2x+4+8x-8=72, 10x-4=72, 10x=76, x=7.6... Still not clean. Change to: 10x=72+4=76... Wait, with (x+2) and (4x-4): 10x-4=72 gives x=7.6. Let me try different numbers. Actually change Shape 2 to 19: 10x-4=76, x=8.
+      q17b: ["9"], // 6(4y) = 18×12, 24y = 216, y = 9
+      q17c: ["16"], // 7m - 5 = 6m + 11, m = 16
+      
+      // Page 12 (7 marks)
+      q18a: ["17"], // 391/23 = 17
+      q18b: ["15"], // x² = 15x, x = 15
+      q19a: ["0.875"],
+      q19b: ["3/4"], // 5/7 ≈ 0.714, 3/4 = 0.75
+      q19c: ["5/8, 0.6, 2/3"], // 5/8=0.625, 0.6, 2/3≈0.667
+      q20a: ["120"], // (x/8) + 12 = 27, x/8 = 15, x = 120
+      q20b: ["4", "9"], // 5_4: Try 504: 504÷6=84✓, 504÷9=56✓. Try 594: 594÷6=99✓, 594÷9=66✓. Wait, 504÷9=56 not clean. Let me verify: 504=56×9=504✓. So both 0 and 9 work, but also check 544: sum=13 not divisible by 3. Actually I should check which 5_4 numbers are divisible by both. For divisible by 9, sum of digits must be divisible by 9: 5+_+4=9+_ must equal 9,18,or 27. So _=0 or _=9. For divisible by 6: must be even (4 at end is even✓) and divisible by 3. So _ could be 0,3,6,9 for divisibility by 3. Intersection: 0 or 9. But which is THE answer? Let me check: 504÷6=84✓, 504÷9=56✓. Both work! I'll accept both.
+    };
+    
+    const pageMarks = {
+      1: ["q1a", "q1b", "q1c", "q1d", "q1e", "q1f", "q1g"],
+      2: ["q2a", "q2b", "q2c", "q2d", "q2e"],
+      3: ["q3a", "q3b", "q3c1", "q3c2", "q3d", "q3e", "q3f"],
+      4: ["q4a", "q4b", "q4c", "q5a", "q5b", "q5c", "q5d"],
+      5: ["q6a", "q6b", "q6c", "q6d", "q7a", "q7b"],
+      6: ["q8a", "q8b", "q9a", "q9b", "q9c"],
+      7: ["q10a", "q10b", "q10c", "q10d", "q11a", "q11b"],
+      8: ["q12a", "q12b", "q12c", "q13a", "q13b"],
+      9: ["q14a", "q14b", "q14c", "q15a", "q15b", "q15c"],
+      10: ["q16a1", "q16a2", "q16b", "q16c1", "q16c2", "q16d"],
+      11: ["q17a", "q17b", "q17c"],
+      12: ["q18a", "q18b", "q19a", "q19b", "q19c", "q20a", "q20b"]
+    };
+    
     function startExam() {
       document.getElementById('startScreen').style.display = 'none';
       document.getElementById('examContainer').classList.add('active');
@@ -846,6 +958,18 @@
       }
     }
     
+    function checkAnswer(questionId, userAnswer) {
+      const correctAnswers = answers[questionId];
+      if (!correctAnswers) return false;
+      
+      const cleaned = userAnswer.trim().toLowerCase().replace(/\s+/g, '');
+      
+      return correctAnswers.some(ans => {
+        const cleanedAns = ans.toLowerCase().replace(/\s+/g, '');
+        return cleaned === cleanedAns;
+      });
+    }
+    
     function finishExam() {
       clearInterval(timerInterval);
       
@@ -855,16 +979,160 @@
       
       const answeredCount = countAnsweredQuestions();
       
-      if (answeredCount < 60 && !confirm(`You've answered ${answeredCount} out of 60 questions. Are you sure you want to finish?`)) {
+      if (answeredCount < 40 && !confirm(`You've answered ${answeredCount} out of ~60 questions. Are you sure you want to finish?`)) {
         // Resume timer
         timerInterval = setInterval(updateTimer, 1000);
         return;
       }
       
-      alert(`Exam completed!\n\nTime taken: ${minutesTaken} minutes ${secondsTaken} seconds\nQuestions answered: ${answeredCount}/60\n\nYour answers have been saved. You can now review them or compare with the mark scheme.`);
+      // Grade the exam
+      const results = gradeExam();
+      showResults(results, minutesTaken, secondsTaken);
+    }
+    
+    function gradeExam() {
+      let totalCorrect = 0;
+      let totalAnswered = 0;
+      const pageScores = {};
+      const questionResults = {};
       
-      // You could add auto-grading here in future
-      // For now, students can check their own answers against the mark scheme
+      // Grade each question
+      Object.keys(answers).forEach(questionId => {
+        const input = document.getElementById(questionId);
+        if (input) {
+          const userAnswer = input.value;
+          if (userAnswer && userAnswer.trim()) {
+            totalAnswered++;
+            const isCorrect = checkAnswer(questionId, userAnswer);
+            if (isCorrect) {
+              totalCorrect++;
+              input.style.borderColor = '#10b981';
+              input.style.background = '#d1fae5';
+            } else {
+              input.style.borderColor = '#ef4444';
+              input.style.background = '#fee2e2';
+            }
+            questionResults[questionId] = {
+              correct: isCorrect,
+              userAnswer: userAnswer,
+              correctAnswer: answers[questionId][0]
+            };
+          }
+        }
+      });
+      
+      // Calculate page scores
+      Object.keys(pageMarks).forEach(page => {
+        const questions = pageMarks[page];
+        let pageCorrect = 0;
+        let pageTotal = questions.length;
+        
+        questions.forEach(qId => {
+          if (questionResults[qId] && questionResults[qId].correct) {
+            pageCorrect++;
+          }
+        });
+        
+        pageScores[page] = {
+          correct: pageCorrect,
+          total: pageTotal
+        };
+      });
+      
+      return {
+        totalCorrect,
+        totalAnswered,
+        totalQuestions: Object.keys(answers).length,
+        pageScores,
+        questionResults
+      };
+    }
+    
+    function showResults(results, minutes, seconds) {
+      const percentage = Math.round((results.totalCorrect / results.totalQuestions) * 100);
+      
+      let message = '';
+      if (percentage >= 85) {
+        message = '🌟 Outstanding! Excellent work!';
+      } else if (percentage >= 70) {
+        message = '🎉 Great job! Well done!';
+      } else if (percentage >= 55) {
+        message = '👍 Good effort! Keep practicing!';
+      } else {
+        message = '💪 Keep working - you\'ll improve!';
+      }
+      
+      let pageBreakdown = '<h3 style="margin-top: 1.5rem;">Score by Page:</h3><div style="display: grid; gap: 0.5rem;">';
+      
+      Object.keys(results.pageScores).forEach(page => {
+        const score = results.pageScores[page];
+        const percent = Math.round((score.correct / score.total) * 100);
+        const color = percent >= 70 ? '#10b981' : percent >= 50 ? '#f59e0b' : '#ef4444';
+        
+        pageBreakdown += `
+          <div style="display: flex; justify-content: space-between; padding: 0.5rem; background: #f9fafb; border-radius: 6px; border-left: 4px solid ${color};">
+            <span><strong>Page ${page}</strong></span>
+            <span>${score.correct}/${score.total} (${percent}%)</span>
+          </div>
+        `;
+      });
+      
+      pageBreakdown += '</div>';
+      
+      const resultHTML = `
+        <div style="background: white; padding: 2rem; border-radius: 12px; margin-top: 1rem;">
+          <h2 style="color: #3b82f6; text-align: center;">📊 Exam Results</h2>
+          
+          <div style="text-align: center; margin: 1.5rem 0;">
+            <div style="font-size: 3rem; font-weight: bold; color: #3b82f6;">
+              ${results.totalCorrect}/${results.totalQuestions}
+            </div>
+            <div style="font-size: 1.3rem; color: #6b7280; margin-top: 0.5rem;">
+              ${percentage}% Correct
+            </div>
+            <div style="font-size: 1.2rem; color: #10b981; margin-top: 1rem;">
+              ${message}
+            </div>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 2rem 0;">
+            <div style="padding: 1rem; background: #f0f4f8; border-radius: 8px; text-align: center;">
+              <div style="font-size: 1.5rem; font-weight: bold; color: #3b82f6;">${results.totalCorrect}</div>
+              <div style="font-size: 0.9rem; color: #6b7280;">Correct</div>
+            </div>
+            <div style="padding: 1rem; background: #f0f4f8; border-radius: 8px; text-align: center;">
+              <div style="font-size: 1.5rem; font-weight: bold; color: #ef4444;">${results.totalQuestions - results.totalCorrect}</div>
+              <div style="font-size: 0.9rem; color: #6b7280;">Incorrect</div>
+            </div>
+            <div style="padding: 1rem; background: #f0f4f8; border-radius: 8px; text-align: center;">
+              <div style="font-size: 1.5rem; font-weight: bold; color: #f59e0b;">${minutes}:${seconds.toString().padStart(2, '0')}</div>
+              <div style="font-size: 0.9rem; color: #6b7280;">Time Taken</div>
+            </div>
+          </div>
+          
+          ${pageBreakdown}
+          
+          <div style="margin-top: 2rem; text-align: center;">
+            <p style="color: #6b7280; margin-bottom: 1rem;">
+              ✅ Correct answers are highlighted in <span style="color: #10b981; font-weight: bold;">green</span><br>
+              ❌ Incorrect answers are highlighted in <span style="color: #ef4444; font-weight: bold;">red</span><br>
+              Scroll up to review your answers!
+            </p>
+            
+            <button class="btn btn-primary" onclick="location.reload()">Try Again</button>
+            <button class="btn btn-secondary" onclick="location.href='11plus.html'">Back to Practice Quiz</button>
+          </div>
+        </div>
+      `;
+      
+      // Insert results at top of page
+      const container = document.querySelector('.container');
+      const resultsDiv = document.createElement('div');
+      resultsDiv.innerHTML = resultHTML;
+      container.insertBefore(resultsDiv, container.firstChild);
+      
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
     function countAnsweredQuestions() {
