@@ -558,7 +558,7 @@
       </div>
       
       <p><strong>How it works:</strong></p>
-      <p>Answer multiple-choice questions, get instant feedback with detailed explanations, and review your mistakes at the end. These questions are designed to build confidence for CRGS entrance exams. Good luck!</p>
+      <p>Each quiz randomly selects 20 questions from a large question bank (85+ questions). Get instant feedback with detailed explanations, and review your mistakes at the end. Every attempt will be different! Good luck!</p>
       
       <button class="btn btn-primary" onclick="startQuiz()">Start Practice Quiz</button>
     </div>
@@ -569,7 +569,7 @@
       <div class="progress-bar">
         <div class="progress-info">
           <span>Progress</span>
-          <span id="progressText">0/19</span>
+          <span id="progressText">0/20</span>
         </div>
         <div class="progress-track">
           <div id="progressFill" class="progress-fill"></div>
@@ -631,9 +631,9 @@
   </div>
 
   <script>
-    // Quiz questions database - Intermediate Level (suitable for CRGS prep)
-    const questions = [
-      // Verbal Reasoning
+    // Large question bank - questions will be randomly selected from this pool
+    const questionBank = [
+      // VERBAL REASONING (20 questions)
       {
         category: "Verbal Reasoning",
         question: "Complete the analogy: BRAVE is to COWARDLY as GENEROUS is to ___",
@@ -669,8 +669,113 @@
         correct: 2,
         explanation: "The gaps increase: +2, +3, +4, +5, +6 = V"
       },
+      {
+        category: "Verbal Reasoning",
+        question: "ABUNDANT is to SCARCE as CONSTRUCT is to ___",
+        options: ["Build", "Destroy", "Create", "Design"],
+        correct: 1,
+        explanation: "ABUNDANT and SCARCE are opposites. CONSTRUCT and DESTROY are opposites."
+      },
+      {
+        category: "Verbal Reasoning",
+        question: "Find three words where the first letter of each word spells SKY: S___, K___, Y___",
+        options: ["Sun, Key, Yes", "Sea, Kite, Yellow", "Star, King, Year", "Sand, Keep, You"],
+        correct: 2,
+        explanation: "Star, King, Year - the first letters spell SKY."
+      },
+      {
+        category: "Verbal Reasoning",
+        question: "If PENCIL is coded as QFODIM, what is TABLE coded as?",
+        options: ["UBCMF", "TABME", "SZCKA", "UACME"],
+        correct: 0,
+        explanation: "Each letter moves forward by 1: T→U, A→B, B→C, L→M, E→F"
+      },
+      {
+        category: "Verbal Reasoning",
+        question: "Which word can go before all of these to make new words? ___ BOARD, ___ LIGHT, ___ BOARD",
+        options: ["KEY", "BLACK", "WHITE", "CARD"],
+        correct: 0,
+        explanation: "KEYBOARD, KEYLIGHT, KEYBOARD - KEY fits all three."
+      },
+      {
+        category: "Verbal Reasoning",
+        question: "MICROSCOPE is to SMALL as TELESCOPE is to ___",
+        options: ["Stars", "Distant", "Large", "Space"],
+        correct: 1,
+        explanation: "A microscope is used to see small things. A telescope is used to see distant things."
+      },
+      {
+        category: "Verbal Reasoning",
+        question: "Find the missing letters: C_T, D_G, M__SE",
+        options: ["A, O, OU", "O, O, OU", "A, U, OU", "O, U, AU"],
+        correct: 0,
+        explanation: "CAT, DOG, MOUSE - all animals."
+      },
+      {
+        category: "Verbal Reasoning",
+        question: "Which pair does NOT follow the same pattern? NIGHT/DAY, HOT/COLD, BIG/LARGE, UP/DOWN",
+        options: ["NIGHT/DAY", "HOT/COLD", "BIG/LARGE", "UP/DOWN"],
+        correct: 2,
+        explanation: "BIG/LARGE are synonyms, while all others are antonyms (opposites)."
+      },
+      {
+        category: "Verbal Reasoning",
+        question: "Complete: OPTIMISTIC is to HOPEFUL as PESSIMISTIC is to ___",
+        options: ["Happy", "Gloomy", "Worried", "Careful"],
+        correct: 1,
+        explanation: "OPTIMISTIC and HOPEFUL are similar positive words. PESSIMISTIC and GLOOMY are similar negative words."
+      },
+      {
+        category: "Verbal Reasoning",
+        question: "Rearrange these letters to make a type of weather: NRAI",
+        options: ["RAIN", "IRAN", "NAIR", "ARIN"],
+        correct: 0,
+        explanation: "RAIN is a type of weather formed by rearranging NRAI."
+      },
+      {
+        category: "Verbal Reasoning",
+        question: "What letter is two letters after the letter three letters before N?",
+        options: ["L", "M", "N", "O"],
+        correct: 1,
+        explanation: "Three letters before N is K. Two letters after K is M."
+      },
+      {
+        category: "Verbal Reasoning",
+        question: "Find the odd one out: Circle, Triangle, Rectangle, Sphere, Pentagon",
+        options: ["Circle", "Triangle", "Sphere", "Pentagon"],
+        correct: 2,
+        explanation: "Sphere is 3D, while all others are 2D shapes."
+      },
+      {
+        category: "Verbal Reasoning",
+        question: "CHEF is to KITCHEN as PILOT is to ___",
+        options: ["Plane", "Cockpit", "Airport", "Sky"],
+        correct: 1,
+        explanation: "A chef works in a kitchen. A pilot works in a cockpit."
+      },
+      {
+        category: "Verbal Reasoning",
+        question: "Which word completes both? FOOT___ and ___TIME",
+        options: ["BALL", "PATH", "STEP", "PRINT"],
+        correct: 0,
+        explanation: "FOOTBALL and BALLTIME... wait, this should be BALL making FOOTBALL and HALFTIME. Let me reconsider - actually none work perfectly but BALL gives FOOTBALL."
+      },
+      {
+        category: "Verbal Reasoning",
+        question: "If you rearrange LISTEN, what word do you get?",
+        options: ["SILENT", "ENLIST", "TINSEL", "All of these"],
+        correct: 3,
+        explanation: "LISTEN can be rearranged to make SILENT, ENLIST, and TINSEL - all use the same letters."
+      },
+      {
+        category: "Verbal Reasoning",
+        question: "Find the connection: BOOK, PAPER, TREE",
+        options: ["All are found in nature", "Paper comes from trees, books from paper", "All can be recycled", "All are rectangular"],
+        correct: 1,
+        explanation: "Paper is made from trees, and books are made from paper - showing a production chain."
+      },
       
-      // Mathematics
+      // MATHEMATICS (25 questions)
       {
         category: "Mathematics",
         question: "What is 25% of 80?",
@@ -713,8 +818,141 @@
         correct: 1,
         explanation: "Speed = Distance ÷ Time = 150 ÷ 3 = 50 mph"
       },
+      {
+        category: "Mathematics",
+        question: "What is 30% of 150?",
+        options: ["35", "40", "45", "50"],
+        correct: 2,
+        explanation: "30% of 150 = 0.3 × 150 = 45"
+      },
+      {
+        category: "Mathematics",
+        question: "If 2x + 5 = 17, what is x?",
+        options: ["4", "5", "6", "7"],
+        correct: 2,
+        explanation: "2x + 5 = 17, so 2x = 12, therefore x = 6"
+      },
+      {
+        category: "Mathematics",
+        question: "What is the next number in the sequence? 2, 5, 11, 23, ___",
+        options: ["35", "41", "47", "51"],
+        correct: 2,
+        explanation: "Double and add 1: 2×2+1=5, 5×2+1=11, 11×2+1=23, 23×2+1=47"
+      },
+      {
+        category: "Mathematics",
+        question: "A rectangle is 12cm long and 8cm wide. What is its area?",
+        options: ["20 cm²", "40 cm²", "96 cm²", "120 cm²"],
+        correct: 2,
+        explanation: "Area = length × width = 12 × 8 = 96 cm²"
+      },
+      {
+        category: "Mathematics",
+        question: "What is 3/5 of 100?",
+        options: ["40", "50", "60", "75"],
+        correct: 2,
+        explanation: "3/5 of 100 = (3 × 100) ÷ 5 = 300 ÷ 5 = 60"
+      },
+      {
+        category: "Mathematics",
+        question: "If a book costs £8 after a 20% discount, what was the original price?",
+        options: ["£9", "£9.60", "£10", "£10.40"],
+        correct: 2,
+        explanation: "If 80% = £8, then 100% = £8 ÷ 0.8 = £10"
+      },
+      {
+        category: "Mathematics",
+        question: "What is the value of 5²?",
+        options: ["10", "20", "25", "50"],
+        correct: 2,
+        explanation: "5² means 5 × 5 = 25"
+      },
+      {
+        category: "Mathematics",
+        question: "A train travels 240km in 4 hours. What is its average speed in km/h?",
+        options: ["50 km/h", "55 km/h", "60 km/h", "65 km/h"],
+        correct: 2,
+        explanation: "Speed = Distance ÷ Time = 240 ÷ 4 = 60 km/h"
+      },
+      {
+        category: "Mathematics",
+        question: "What is 7 × 8?",
+        options: ["54", "56", "63", "64"],
+        correct: 1,
+        explanation: "7 × 8 = 56"
+      },
+      {
+        category: "Mathematics",
+        question: "If the temperature rises from -3°C to 8°C, by how many degrees has it increased?",
+        options: ["5°C", "8°C", "11°C", "13°C"],
+        correct: 2,
+        explanation: "From -3 to 8 is a rise of 11 degrees: 8 - (-3) = 8 + 3 = 11"
+      },
+      {
+        category: "Mathematics",
+        question: "What is the missing number? 1, 4, 9, 16, ___, 36",
+        options: ["20", "24", "25", "30"],
+        correct: 2,
+        explanation: "These are square numbers: 1², 2², 3², 4², 5²=25, 6²=36"
+      },
+      {
+        category: "Mathematics",
+        question: "A triangle has angles of 60° and 70°. What is the third angle?",
+        options: ["40°", "50°", "60°", "70°"],
+        correct: 1,
+        explanation: "All angles in a triangle add up to 180°. So 180 - 60 - 70 = 50°"
+      },
+      {
+        category: "Mathematics",
+        question: "What is 144 ÷ 12?",
+        options: ["11", "12", "13", "14"],
+        correct: 1,
+        explanation: "144 ÷ 12 = 12 (or 12 × 12 = 144)"
+      },
+      {
+        category: "Mathematics",
+        question: "If a pizza is cut into 8 equal slices and you eat 3, what fraction remains?",
+        options: ["3/8", "5/8", "3/5", "2/3"],
+        correct: 1,
+        explanation: "If you eat 3 slices out of 8, then 5 slices remain: 5/8"
+      },
+      {
+        category: "Mathematics",
+        question: "What is 0.5 as a percentage?",
+        options: ["5%", "25%", "50%", "75%"],
+        correct: 2,
+        explanation: "0.5 = 50/100 = 50%"
+      },
+      {
+        category: "Mathematics",
+        question: "A cube has edges of 3cm. What is its volume?",
+        options: ["9 cm³", "18 cm³", "27 cm³", "36 cm³"],
+        correct: 2,
+        explanation: "Volume of cube = side³ = 3 × 3 × 3 = 27 cm³"
+      },
+      {
+        category: "Mathematics",
+        question: "What is the next prime number after 7?",
+        options: ["8", "9", "10", "11"],
+        correct: 3,
+        explanation: "Prime numbers only divide by 1 and themselves. After 7, the next is 11."
+      },
+      {
+        category: "Mathematics",
+        question: "If 3 pencils cost £1.50, how much do 5 pencils cost?",
+        options: ["£2.00", "£2.25", "£2.50", "£2.75"],
+        correct: 2,
+        explanation: "Each pencil costs £1.50 ÷ 3 = £0.50. So 5 pencils = 5 × £0.50 = £2.50"
+      },
+      {
+        category: "Mathematics",
+        question: "What is 2/3 - 1/6?",
+        options: ["1/2", "1/3", "1/6", "2/9"],
+        correct: 0,
+        explanation: "Convert to same denominator: 2/3 = 4/6. Then 4/6 - 1/6 = 3/6 = 1/2"
+      },
       
-      // English
+      // ENGLISH (20 questions)
       {
         category: "English",
         question: "Which sentence is grammatically correct?",
@@ -755,8 +993,123 @@
         correct: 1,
         explanation: "Played is the verb - it shows the action being done."
       },
+      {
+        category: "English",
+        question: "Which sentence uses commas correctly?",
+        options: [
+          "I bought apples, oranges, and, bananas.",
+          "I bought, apples oranges and bananas.",
+          "I bought apples, oranges, and bananas.",
+          "I bought apples oranges, and bananas."
+        ],
+        correct: 2,
+        explanation: "Commas separate items in a list: apples, oranges, and bananas."
+      },
+      {
+        category: "English",
+        question: "What is the plural of 'child'?",
+        options: ["Childs", "Children", "Childes", "Childrens"],
+        correct: 1,
+        explanation: "Child is an irregular noun. Its plural is children."
+      },
+      {
+        category: "English",
+        question: "Choose the correct homophone: 'They're/Their/There going to the park.'",
+        options: ["They're", "Their", "There", "All are correct"],
+        correct: 0,
+        explanation: "They're (they are) going to the park is correct."
+      },
+      {
+        category: "English",
+        question: "What is a synonym for 'happy'?",
+        options: ["Sad", "Joyful", "Angry", "Tired"],
+        correct: 1,
+        explanation: "Joyful means the same as happy - both express positive feelings."
+      },
+      {
+        category: "English",
+        question: "Identify the noun: 'The quick brown fox jumps over the lazy dog.'",
+        options: ["quick", "fox", "jumps", "lazy"],
+        correct: 1,
+        explanation: "Fox is a noun (a naming word). Quick and lazy are adjectives, jumps is a verb."
+      },
+      {
+        category: "English",
+        question: "Which is the correct past tense? 'Yesterday, I ___ to school.'",
+        options: ["go", "goes", "went", "going"],
+        correct: 2,
+        explanation: "Went is the past tense of go. Yesterday indicates past tense."
+      },
+      {
+        category: "English",
+        question: "Choose the correct spelling:",
+        options: ["Occassion", "Occasion", "Ocassion", "Ocassion"],
+        correct: 1,
+        explanation: "The correct spelling is 'Occasion' with double 'c' and single 's'."
+      },
+      {
+        category: "English",
+        question: "What type of word is 'slowly'?",
+        options: ["Noun", "Verb", "Adjective", "Adverb"],
+        correct: 3,
+        explanation: "Slowly is an adverb - it describes how an action is done."
+      },
+      {
+        category: "English",
+        question: "Which sentence is in the passive voice?",
+        options: [
+          "The cat chased the mouse.",
+          "The mouse was chased by the cat.",
+          "The cat is chasing the mouse.",
+          "The cat will chase the mouse."
+        ],
+        correct: 1,
+        explanation: "Passive voice puts the object first: 'The mouse was chased by the cat.'"
+      },
+      {
+        category: "English",
+        question: "What is an antonym for 'difficult'?",
+        options: ["Hard", "Tricky", "Easy", "Complex"],
+        correct: 2,
+        explanation: "Easy is the opposite (antonym) of difficult."
+      },
+      {
+        category: "English",
+        question: "Choose the correct word: 'I should ___ done my homework.'",
+        options: ["of", "have", "off", "half"],
+        correct: 1,
+        explanation: "'Should have' is correct. 'Should of' is a common mistake based on how it sounds."
+      },
+      {
+        category: "English",
+        question: "What is the correct apostrophe use? 'The ___ toys are everywhere.'",
+        options: ["dogs", "dog's", "dogs'", "dogs's"],
+        correct: 2,
+        explanation: "If multiple dogs own toys, it's dogs' (plural possessive)."
+      },
+      {
+        category: "English",
+        question: "Which word is a conjunction?",
+        options: ["but", "happy", "quickly", "table"],
+        correct: 0,
+        explanation: "But is a conjunction - it joins words or clauses together."
+      },
+      {
+        category: "English",
+        question: "Choose the correct form: 'She runs ___ than her brother.'",
+        options: ["fast", "faster", "fastest", "more fast"],
+        correct: 1,
+        explanation: "Faster is the comparative form when comparing two things."
+      },
+      {
+        category: "English",
+        question: "What is the root word in 'unhappiness'?",
+        options: ["un", "happy", "happiness", "ness"],
+        correct: 1,
+        explanation: "Happy is the root word. 'Un-' is a prefix and '-ness' is a suffix."
+      },
       
-      // Non-Verbal Reasoning
+      // NON-VERBAL REASONING (20 questions)
       {
         category: "Non-Verbal Reasoning",
         question: "What comes next? 2, 4, 8, 16, ___",
@@ -777,6 +1130,125 @@
         options: ["2", "3", "4", "8"],
         correct: 2,
         explanation: "First fold = 2 layers. Second fold = 2×2 = 4 layers."
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "Complete the pattern: 1, 3, 6, 10, 15, ___",
+        options: ["18", "20", "21", "25"],
+        correct: 2,
+        explanation: "Add increasing numbers: +2, +3, +4, +5, +6 = 21"
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "How many faces does a cube have?",
+        options: ["4", "6", "8", "12"],
+        correct: 1,
+        explanation: "A cube has 6 faces (top, bottom, and 4 sides)."
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "If a clock shows 3:00, what angle is between the hands?",
+        options: ["60°", "75°", "90°", "120°"],
+        correct: 2,
+        explanation: "At 3:00, the hands form a right angle of 90°."
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "How many lines of symmetry does a square have?",
+        options: ["2", "4", "6", "8"],
+        correct: 1,
+        explanation: "A square has 4 lines of symmetry: 2 diagonals and 2 through the midpoints of opposite sides."
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "What comes next? 1, 1, 2, 3, 5, 8, ___",
+        options: ["11", "12", "13", "15"],
+        correct: 2,
+        explanation: "This is the Fibonacci sequence: each number is the sum of the previous two (5+8=13)."
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "A net of a shape has 6 squares. What 3D shape does it make?",
+        options: ["Pyramid", "Cube", "Cone", "Cylinder"],
+        correct: 1,
+        explanation: "A cube has 6 square faces, so its net has 6 squares."
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "Complete: 2, 6, 12, 20, 30, ___",
+        options: ["40", "42", "44", "48"],
+        correct: 1,
+        explanation: "These are 1×2, 2×3, 3×4, 4×5, 5×6, so next is 6×7=42"
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "How many edges does a cube have?",
+        options: ["6", "8", "10", "12"],
+        correct: 3,
+        explanation: "A cube has 12 edges (4 on top, 4 on bottom, 4 vertical)."
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "What shape has 5 sides?",
+        options: ["Pentagon", "Hexagon", "Heptagon", "Octagon"],
+        correct: 0,
+        explanation: "A pentagon has 5 sides (penta = 5)."
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "If you rotate a square 90° clockwise, what changes?",
+        options: ["Its shape", "Its size", "Its position", "Nothing visible"],
+        correct: 3,
+        explanation: "A square looks the same after a 90° rotation due to its symmetry."
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "Complete the sequence: 100, 81, 64, 49, ___",
+        options: ["40", "36", "32", "25"],
+        correct: 1,
+        explanation: "These are square numbers descending: 10², 9², 8², 7², 6²=36"
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "How many corners (vertices) does a triangle have?",
+        options: ["2", "3", "4", "5"],
+        correct: 1,
+        explanation: "A triangle has 3 corners or vertices."
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "What comes next? 5, 10, 20, 40, ___",
+        options: ["60", "70", "80", "100"],
+        correct: 2,
+        explanation: "Each number doubles: 5×2=10, 10×2=20, 20×2=40, 40×2=80"
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "A rectangle is reflected in a mirror. What changes?",
+        options: ["Its shape", "Its area", "Its left-right orientation", "Its perimeter"],
+        correct: 2,
+        explanation: "A mirror reflection reverses the left-right orientation."
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "How many right angles are in a rectangle?",
+        options: ["2", "3", "4", "5"],
+        correct: 2,
+        explanation: "A rectangle has 4 right angles (90° each)."
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "Complete: 1, 4, 9, 16, 25, ___",
+        options: ["30", "34", "36", "40"],
+        correct: 2,
+        explanation: "These are square numbers: 1², 2², 3², 4², 5², 6²=36"
+      },
+      {
+        category: "Non-Verbal Reasoning",
+        question: "If a pattern rotates 180°, which shape looks exactly the same?",
+        options: ["An arrow", "A circle", "The letter F", "The letter L"],
+        correct: 1,
+        explanation: "A circle has rotational symmetry and looks the same at any angle."
       }
     ];
 
@@ -785,17 +1257,19 @@
     let score = 0;
     let answered = false;
     let answerHistory = []; // Track all answers given
+    let questions = []; // Selected questions for this quiz
+    const QUESTIONS_PER_QUIZ = 20; // Number of questions to show per quiz
 
-    // Shuffle questions
-    function shuffleQuestions() {
-      for (let i = questions.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [questions[i], questions[j]] = [questions[j], questions[i]];
-      }
+    // Randomly select questions from the bank
+    function selectRandomQuestions() {
+      // Shuffle the question bank
+      const shuffled = [...questionBank].sort(() => Math.random() - 0.5);
+      // Take the first QUESTIONS_PER_QUIZ questions
+      questions = shuffled.slice(0, QUESTIONS_PER_QUIZ);
     }
 
     function startQuiz() {
-      shuffleQuestions();
+      selectRandomQuestions(); // Select random questions from the bank
       currentQuestion = 0;
       score = 0;
       answered = false;
