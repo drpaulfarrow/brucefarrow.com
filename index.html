@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>voidX744 — Latest Videos</title>
   <style>
     /* --- Basic page layout --- */
@@ -188,10 +189,14 @@
       // When clicked, replace the thumb with the iframe (lazy load)
       thumb.addEventListener('click', () => {
         const iframe = document.createElement('iframe');
-        iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(video.id) + '?autoplay=1';
+        // Use youtube-nocookie.com (privacy-enhanced mode) to avoid Error 153
+        // when the page is opened locally or referrer headers are missing.
+        // Do NOT encodeURIComponent the video ID — YT IDs are already URL-safe.
+        iframe.src = 'https://www.youtube-nocookie.com/embed/' + video.id + '?autoplay=1&rel=0';
         iframe.title = video.title;
-        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
         iframe.setAttribute('allowfullscreen','');
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
         // remove thumb and insert iframe
         wrap.innerHTML = '';
         wrap.appendChild(iframe);
