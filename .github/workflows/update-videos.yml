@@ -2,7 +2,8 @@ name: Update videos
 
 # Fetches the YouTube feed into videos.json and redeploys the site.
 # Commits made with GITHUB_TOKEN don't trigger the main deploy workflow,
-# so this workflow deploys itself when the list changes.
+# so this workflow deploys itself: on a schedule only when the list changes,
+# and always when run by hand or by a push.
 on:
   schedule:
     - cron: '17 */3 * * *'
@@ -17,8 +18,10 @@ on:
 permissions:
   contents: write
 
+# Shared with the main deploy workflow so two production deploys never
+# overlap (Azure cancels the older one when they do).
 concurrency:
-  group: update-videos
+  group: swa-production
   cancel-in-progress: false
 
 jobs:
@@ -26,6 +29,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -45,7 +50,7 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
       - name: Deploy
-        if: steps.commit.outputs.changed == 'true'
+        if: steps.commit.outputs.changed == 'true' || github.event_name != 'schedule'
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GRAY_SAND_0B9CD0210 }}
