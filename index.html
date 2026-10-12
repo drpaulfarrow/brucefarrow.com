@@ -4,320 +4,413 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>voidX744 — Latest Videos</title>
+  <meta name="color-scheme" content="dark">
+  <title>voidX744 Magazine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-    /* --- Basic page layout --- */
-    :root{--bg:#f7f8fb;--card:#fff;--muted:#6b7280;--accent:#111827}
+    /* --- Theme: console-dashboard greens + battle-royale rarity colours --- */
+    :root{
+      --bg:#06080b; --panel:#10141a; --panel-2:#171c24; --line:#232a35;
+      --text:#f4f6f8; --muted:#9aa4b2;
+      --green:#107c10; --neon:#3ee13e;
+      --epic:#b05cff; --rare:#2f9bff; --uncommon:#5fd33f; --legendary:#ffa21a;
+      --display:'Anton', Impact, 'Arial Narrow Bold', sans-serif;
+      --body:'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    }
     *{box-sizing:border-box}
-    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; background:var(--bg); color:var(--accent); -webkit-font-smoothing:antialiased}
-    header{padding:2rem 1rem 0; text-align:center}
-    h1{margin:0;font-size:1.6rem}
-    p.tagline{margin:.35rem 0 1.25rem;color:var(--muted)}
+    html{-webkit-text-size-adjust:100%}
+    body{
+      margin:0; color:var(--text); font-family:var(--body); -webkit-font-smoothing:antialiased;
+      background:
+        radial-gradient(900px 500px at 0% -10%, rgba(16,124,16,.35), transparent 60%),
+        radial-gradient(800px 600px at 110% 30%, rgba(176,92,255,.22), transparent 60%),
+        repeating-linear-gradient(135deg, rgba(255,255,255,.018) 0 2px, transparent 2px 14px),
+        var(--bg);
+      background-attachment:fixed;
+      min-height:100vh;
+    }
+    a{color:inherit}
+    .wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+    .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-    /* --- Grid of video cards --- */
-    .videos {display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;padding:1rem;max-width:1100px;margin:0 auto}
-    .card{background:var(--card);border-radius:12px;overflow:hidden;box-shadow:0 6px 20px rgba(16,24,40,.06);transition:transform .18s ease,box-shadow .18s ease}
-    .card:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(16,24,40,.08)}
+    /* --- Masthead --- */
+    .strip{display:flex;justify-content:space-between;gap:1rem;padding:.6rem 0;border-bottom:1px solid var(--line);
+      font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+    .strip .live{color:var(--neon)}
+    .strip .live::before{content:'';display:inline-block;width:.55em;height:.55em;border-radius:50%;background:var(--neon);
+      margin-right:.5em;box-shadow:0 0 10px var(--neon);vertical-align:.05em}
+    .masthead{padding:1.2rem 0 1rem;display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+    .logo{margin:0;font-family:var(--display);font-weight:400;line-height:.82;text-transform:uppercase;
+      font-size:clamp(3.6rem,13vw,9.5rem);letter-spacing:.01em;transform:skew(-8deg);
+      background:linear-gradient(180deg,#fff 0%,#fff 55%,#c9f7c9 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+      filter:drop-shadow(0 6px 0 var(--green)) drop-shadow(0 0 24px rgba(62,225,62,.35))}
+    .logo span{color:var(--neon);-webkit-text-fill-color:var(--neon)}
+    .tagline{margin:0 0 .6rem;max-width:20rem;font-weight:600;color:var(--muted);line-height:1.4}
+    .tagline b{display:block;font-family:var(--display);font-weight:400;font-size:1.5rem;letter-spacing:.04em;color:var(--text);text-transform:uppercase}
 
-    /* Responsive 16:9 iframe container inside card */
-    .video-wrap{position:relative;padding-bottom:56.25%;height:0;background:#000}
-  .video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
-  /* Thumbnail overlay (loads lighter than iframe) */
-  .thumb{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#000;color:#fff;cursor:pointer}
-  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-  .play-btn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:rgba(17,24,39,.85);display:flex;align-items:center;justify-content:center}
-  .play-btn:after{content:'';display:block;margin-left:3px;border-style:solid;border-width:10px 0 10px 16px;border-color:transparent transparent transparent #fff}
+    /* Section chips (filter) */
+    .sections{position:relative;z-index:1;display:flex;gap:.5rem;flex-wrap:wrap;padding:.4rem 0 1.1rem}
+    .chip{font:800 .78rem/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--text);cursor:pointer;
+      padding:.65rem 1rem;border:2px solid var(--line);background:var(--panel);border-radius:999px;transition:all .15s ease}
+    .chip:hover{border-color:var(--neon)}
+    .chip[aria-pressed="true"]{background:var(--neon);border-color:var(--neon);color:#041004}
+    .chip:focus-visible,.play:focus-visible,.btn:focus-visible,.toc a:focus-visible{outline:3px solid var(--neon);outline-offset:3px}
 
-    .meta{padding:0.8rem 1rem}
-    .title{font-size:1rem;margin:0 0 .35rem}
-    .date{font-size:.85rem;color:var(--muted);margin:0}
+    /* --- Ticker --- */
+    .ticker{background:var(--neon);color:#041004;overflow:hidden;transform:skewY(-1.2deg);margin:0 0 2.2rem;
+      box-shadow:0 8px 30px rgba(62,225,62,.25)}
+    .ticker-track{display:flex;width:max-content;animation:scroll 40s linear infinite}
+    .ticker span{font-family:var(--display);font-size:1.15rem;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;padding:.55rem 0}
+    .ticker span::after{content:'\2605';margin:0 1.2rem}
+    @keyframes scroll{to{transform:translateX(-50%)}}
 
-    /* Load more button */
-    .load-more{display:block;margin:1.25rem auto 3rem;padding:.6rem 1.1rem;border-radius:10px;background:#111827;color:#fff;border:0;cursor:pointer;box-shadow:0 6px 18px rgba(17,24,39,.08)}
-    .load-more:hover{transform:translateY(-3px)}
+    /* --- Cover story --- */
+    .cover{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr);gap:1.5rem;margin-bottom:3rem}
+    .cover-main{position:relative;background:var(--panel);border:1px solid var(--line);
+      clip-path:polygon(0 0,100% 0,100% calc(100% - 28px),calc(100% - 28px) 100%,0 100%)}
+    .cover-text{padding:1.3rem 1.4rem 1.6rem}
+    .kicker{display:inline-block;font:800 .72rem/1 var(--body);letter-spacing:.2em;text-transform:uppercase;
+      padding:.45rem .7rem;margin-bottom:.8rem;color:#041004;background:var(--legendary);transform:skew(-10deg)}
+    .cover h2{margin:0 0 .6rem;font-family:var(--display);font-weight:400;text-transform:uppercase;line-height:.95;
+      font-size:clamp(2.2rem,5.5vw,4.2rem);letter-spacing:.01em}
+    .cover .blurb{font-size:1.08rem;line-height:1.55;color:#d7dde5;margin:0 0 .9rem;max-width:40rem}
+    .toc{background:linear-gradient(160deg,var(--panel-2),var(--panel));border:1px solid var(--line);padding:1.3rem 1.3rem .6rem}
+    .toc h3{margin:0 0 .4rem;font-family:var(--display);font-weight:400;font-size:1.9rem;text-transform:uppercase;letter-spacing:.03em}
+    .toc h3 small{display:block;font:800 .7rem/1.6 var(--body);letter-spacing:.2em;color:var(--neon)}
+    .toc ol{list-style:none;margin:0;padding:0}
+    .toc li{border-top:1px solid var(--line)}
+    .toc a{display:grid;grid-template-columns:3rem 1fr;gap:.6rem;align-items:baseline;padding:.8rem 0;text-decoration:none}
+    .toc .pg{font-family:var(--display);font-size:1.6rem;color:var(--neon);line-height:1}
+    .toc .t{font-weight:800;text-transform:uppercase;font-size:.9rem;letter-spacing:.03em;line-height:1.25}
+    .toc .s{display:block;font-weight:600;font-size:.72rem;letter-spacing:.14em;margin-top:.2rem}
+    .toc a:hover .t{color:var(--neon)}
 
-  /* status area */
-  .status{max-width:1100px;margin:0.5rem auto 0;padding:0 1rem;color:var(--muted);font-size:.95rem}
+    /* --- Video frame + thumbnail button --- */
+    .frame{position:relative;aspect-ratio:16/9;background:#000;overflow:hidden}
+    .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .play{position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;cursor:pointer;background:#000;display:block}
+    .play img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease,filter .35s ease}
+    .play:hover img{transform:scale(1.05);filter:saturate(1.15)}
+    .play::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.55),transparent 45%)}
+    .a-btn{position:absolute;z-index:1;left:50%;top:50%;transform:translate(-50%,-50%);width:68px;height:68px;border-radius:50%;
+      background:var(--green);border:3px solid rgba(255,255,255,.9);display:grid;place-items:center;
+      box-shadow:0 0 0 6px rgba(16,124,16,.35),0 10px 30px rgba(0,0,0,.6);transition:transform .15s ease}
+    .a-btn::before{content:'';margin-left:5px;border-style:solid;border-width:12px 0 12px 19px;border-color:transparent transparent transparent #fff}
+    .play:hover .a-btn{transform:translate(-50%,-50%) scale(1.1)}
+    .placeholder{width:100%;height:100%;display:flex;align-items:flex-end;padding:.8rem 1rem;font-family:var(--display);
+      font-size:1.3rem;letter-spacing:.06em;text-transform:uppercase}
 
-    /* Helpful small-screen padding */
-    @media (max-width:420px){header{padding:1.25rem 0}.videos{padding:0.5rem}}
+    /* --- Feature grid --- */
+    .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin:0 0 1.2rem;
+      border-bottom:3px solid var(--text);padding-bottom:.4rem}
+    .section-head h2{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(2rem,5vw,3rem);text-transform:uppercase;
+      transform:skew(-6deg);letter-spacing:.02em}
+    .section-head p{margin:0;color:var(--muted);font-weight:600;font-size:.9rem}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.4rem}
+    .card{position:relative;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);
+      border-bottom:5px solid var(--rarity,var(--legendary));transition:transform .18s ease,box-shadow .18s ease;
+      clip-path:polygon(0 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%)}
+    .card:hover{transform:translateY(-6px);box-shadow:0 0 0 3px var(--neon),0 18px 40px rgba(0,0,0,.5)}
+    .card.big{grid-column:span 2}
+    .card-body{padding:1rem 1.1rem 1.3rem;display:flex;flex-direction:column;gap:.55rem;flex:1}
+    .tag{align-self:flex-start;font:800 .66rem/1 var(--body);letter-spacing:.18em;text-transform:uppercase;color:#05070a;
+      background:var(--rarity,var(--legendary));padding:.4rem .6rem;transform:skew(-10deg)}
+    .card h3{margin:0;font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:1.65rem;line-height:1;letter-spacing:.01em}
+    .card.big h3{font-size:2.3rem}
+    .card .blurb{margin:0;color:#cfd6df;line-height:1.5;font-size:.95rem}
+    .meta{margin-top:auto;display:flex;flex-wrap:wrap;gap:.4rem .8rem;align-items:center;font-size:.78rem;color:var(--muted);font-weight:600}
+    .hashtags{display:flex;flex-wrap:wrap;gap:.35rem}
+    .hashtags span{color:var(--rarity,var(--neon))}
+    .r-fortnite{--rarity:var(--epic)} .r-zelda{--rarity:var(--uncommon)} .r-football{--rarity:var(--rare)} .r-more{--rarity:var(--legendary)}
+    .s-fortnite{color:var(--epic)} .s-zelda{color:var(--uncommon)} .s-football{color:var(--rare)} .s-more{color:var(--legendary)}
+
+    /* Buttons */
+    .btn{display:inline-flex;align-items:center;gap:.7rem;font:800 .85rem/1 var(--body);letter-spacing:.14em;text-transform:uppercase;
+      color:var(--text);background:var(--panel-2);border:2px solid var(--line);border-radius:999px;padding:.55rem 1.2rem .55rem .55rem;
+      cursor:pointer;text-decoration:none;transition:border-color .15s ease,transform .15s ease}
+    .btn:hover{border-color:var(--neon);transform:translateY(-2px)}
+    .btn i{font-style:normal;width:1.9rem;height:1.9rem;border-radius:50%;display:grid;place-items:center;background:var(--green);
+      color:#fff;font-family:var(--display);font-size:1rem;letter-spacing:0;border:2px solid rgba(255,255,255,.85)}
+    .more-row{display:flex;justify-content:center;margin:2.2rem 0 1rem}
+
+    .status{color:var(--muted);text-align:center;padding:2rem 0;font-weight:600}
+    footer{margin-top:3rem;border-top:1px solid var(--line);padding:1.6rem 0 2.4rem;color:var(--muted);font-size:.85rem}
+    footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+
+    @media (max-width:860px){
+      .cover{grid-template-columns:1fr}
+      .card.big{grid-column:auto}
+      .card.big h3{font-size:1.65rem}
+    }
+    @media (max-width:480px){
+      .strip .hide-sm{display:none}
+      .a-btn{width:56px;height:56px}
+    }
+    @media (prefers-reduced-motion:reduce){
+      .ticker-track{animation:none}
+      .card,.play img,.btn{transition:none}
+    }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <h1>voidX744</h1>
-    <p class="tagline">Latest videos from voidX744</p>
-  </header>
-
-  <!-- Container for the video grid -->
-  <main>
-    <div id="videos" class="videos" aria-live="polite">
-      <!-- Video cards will be injected here by JavaScript -->
+  <div class="wrap">
+    <div class="strip">
+      <span class="live">New drops every week</span>
+      <span id="issue">The clips magazine</span>
+      <span class="hide-sm">Free · No subs needed</span>
     </div>
+    <header class="masthead">
+      <h1 class="logo">void<span>X</span>744</h1>
+      <p class="tagline"><b>Clips. Builds. Edits.</b>Fortnite plays, Zelda build guides and football edits, straight from the channel.</p>
+    </header>
+    <nav class="sections" aria-label="Sections" id="sections">
+      <button class="chip" aria-pressed="true" data-section="all">All</button>
+      <button class="chip" aria-pressed="false" data-section="fortnite">Fortnite</button>
+      <button class="chip" aria-pressed="false" data-section="zelda">Zelda</button>
+      <button class="chip" aria-pressed="false" data-section="football">Football</button>
+      <button class="chip" aria-pressed="false" data-section="more">More</button>
+    </nav>
+  </div>
 
-    <!-- Load more button: reveals additional videos beyond initial set -->
-    <button id="loadMore" class="load-more" style="display:none">Load more videos</button>
-    <div class="status">
-      <span id="status"></span>
-      <button id="proxyThumbs" style="display:none;margin-left:.5rem;padding:.3rem .6rem;border-radius:8px;border:1px solid #ddd;background:#fff;cursor:pointer">Try proxy thumbnails</button>
-    </div>
+  <div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+
+  <main class="wrap">
+    <div id="status" class="status" role="status">Loading the latest issue...</div>
+    <section class="cover" id="cover" hidden aria-label="Cover story"></section>
+    <section id="features" hidden aria-labelledby="features-title">
+      <div class="section-head">
+        <h2 id="features-title">This issue</h2>
+        <p id="features-count"></p>
+      </div>
+      <div class="grid" id="grid"></div>
+      <div class="more-row"><button class="btn" id="loadMore" hidden><i>A</i>Load more</button></div>
+    </section>
   </main>
+
+  <footer>
+    <div class="wrap">
+      <a class="btn" href="https://www.youtube.com/channel/UCNZva9pv563Hc85ibd7O2UQ?sub_confirmation=1" target="_blank" rel="noopener"><i>Y</i>Subscribe on YouTube</a>
+      <span>Video blurbs are written with AI from each video's title.</span>
+    </div>
+  </footer>
 
   <script>
   /*
-    Script: Load the video list from videos.json, which a scheduled GitHub
-    Action (.github/workflows/update-videos.yml) refreshes from the YouTube
-    feed. If videos.json is missing or empty, fall back to fetching the feed
-    through public CORS proxies. Renders responsive embedded players in a grid.
+    Load the video list from videos.json, which a scheduled GitHub Action
+    (.github/workflows/update-videos.yml) refreshes from the YouTube feed and
+    fills with AI-written blurbs. If videos.json is missing or empty, fall back
+    to fetching the feed through public CORS proxies. The newest video is the
+    cover story; the rest fill the "This issue" grid.
   */
-
   (function(){
-    // Configuration
     const CHANNEL_RSS = 'https://www.youtube.com/feeds/videos.xml?channel_id=UCNZva9pv563Hc85ibd7O2UQ';
     const VIDEOS_JSON = 'videos.json';
-    const INITIAL_COUNT = 6; // number of videos to show before "Load more"
-
-  // DOM references
-  const videosEl = document.getElementById('videos');
-  const loadBtn = document.getElementById('loadMore');
-  const statusEl = document.getElementById('status');
-  const proxyThumbsBtn = document.getElementById('proxyThumbs');
-
-  // Whether to fetch thumbnails via an image proxy (settable by user)
-  let useImageProxy = false;
-
-  // Track thumbnail load failures to suggest proxying thumbnails
-  let thumbnailFailures = 0;
-
-  // Simple image proxy prefix (no API key) - uses weserv.nl which can fetch remote images
-  const IMAGE_PROXY_PREFIX = 'https://images.weserv.nl/?url='; // append encoded remote URL
-
-  proxyThumbsBtn.addEventListener('click', () => {
-    useImageProxy = true;
-    proxyThumbsBtn.style.display = 'none';
-    statusEl.textContent = 'Using proxy thumbnails; reloading...';
-    // reload videos to update thumbnails
-    loadVideos();
-  });
-
-  function showProxySuggestion(){
-    if (!useImageProxy){
-      proxyThumbsBtn.style.display = 'inline-block';
-      statusEl.textContent = 'Some thumbnails failed to load — you can try proxy thumbnails.';
-    }
-  }
-
-    // Helper: format ISO date to a friendly string
-    function formatDate(iso){
-      try{
-        const d = new Date(iso);
-        return d.toLocaleDateString(undefined, {year:'numeric', month:'short', day:'numeric'});
-      }catch(e){return iso}
-    }
-
-    // Helper: create a single video card element with a thumbnail overlay
-    function createCard(video){
-      const card = document.createElement('article');
-      card.className = 'card';
-
-      // Video container (responsive 16:9)
-      const wrap = document.createElement('div');
-      wrap.className = 'video-wrap';
-
-      // Thumbnail overlay (YouTube default thumbnail URL)
-      const thumb = document.createElement('div');
-      thumb.className = 'thumb';
-      const img = document.createElement('img');
-      // If the RSS provided a thumbnail URL, prefer it first
-      const fallbacks = [];
-      if (video.thumbnail) {
-        fallbacks.push(video.thumbnail);
-      }
-      // Try i.ytimg fallbacks after RSS-provided URL
-      const base = `https://i.ytimg.com/vi/${encodeURIComponent(video.id)}`;
-      fallbacks.push(`${base}/maxresdefault.jpg`);
-      fallbacks.push(`${base}/hqdefault.jpg`);
-      fallbacks.push(`${base}/sddefault.jpg`);
-      fallbacks.push(`${base}/default.jpg`);
-      let fbIndex = 0;
-      img.alt = video.title;
-      img.loading = 'lazy';
-
-      // Preload thumbnails via Image() to confirm availability before assigning
-      function tryLoadThumb(index){
-        if (index >= fallbacks.length){
-          // all failed => placeholder
-          img.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(`
-            <svg xmlns="http://www.w3.org/2000/svg" width="480" height="270">
-              <rect width="100%" height="100%" fill="#111827"/>
-              <text x="50%" y="50%" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="18" dominant-baseline="middle" text-anchor="middle">No thumbnail</text>
-            </svg>
-          `);
-          console.debug('Thumbnail: no available thumbnail for', video.id);
-          // increment failure counter and suggest proxy if needed
-          thumbnailFailures += 1;
-          showProxySuggestion();
-          return;
-        }
-        let testUrl = fallbacks[index];
-        if (useImageProxy){
-          testUrl = IMAGE_PROXY_PREFIX + encodeURIComponent(testUrl.replace(/^https?:\/\//,'') );
-        }
-        const tester = new Image();
-        tester.onload = function(){
-          img.src = testUrl; // set working src
-          console.debug('Thumbnail loaded from', testUrl);
-        };
-        tester.onerror = function(){
-          // try next fallback
-          tryLoadThumb(index + 1);
-        };
-        // start test (this triggers the request)
-        tester.src = testUrl;
-      }
-      // start trying fallbacks
-      tryLoadThumb(fbIndex);
-
-      const play = document.createElement('div');
-      play.className = 'play-btn';
-
-      thumb.appendChild(img);
-      thumb.appendChild(play);
-
-      // When clicked, replace the thumb with the iframe (lazy load)
-      thumb.addEventListener('click', () => {
-        const iframe = document.createElement('iframe');
-        // Use youtube-nocookie.com (privacy-enhanced mode) to avoid Error 153
-        // when the page is opened locally or referrer headers are missing.
-        // Do NOT encodeURIComponent the video ID — YT IDs are already URL-safe.
-        iframe.src = 'https://www.youtube-nocookie.com/embed/' + video.id + '?autoplay=1&rel=0';
-        iframe.title = video.title;
-        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-        iframe.setAttribute('allowfullscreen','');
-        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-        // remove thumb and insert iframe
-        wrap.innerHTML = '';
-        wrap.appendChild(iframe);
-      }, { once: true });
-
-      wrap.appendChild(thumb);
-
-      // Meta (title + date)
-      const meta = document.createElement('div');
-      meta.className = 'meta';
-      const title = document.createElement('h3');
-      title.className = 'title';
-      title.textContent = video.title;
-      const date = document.createElement('p');
-      date.className = 'date';
-      date.textContent = formatDate(video.published);
-
-      meta.appendChild(title);
-      meta.appendChild(date);
-
-      card.appendChild(wrap);
-      card.appendChild(meta);
-      return card;
-    }
-
-    // Parse the XML text and extract video entries
-    function parseRss(xmlText){
-      // AllOrigins returns a JSON object with `contents` containing the XML
-      // If xmlText already contains '<' then assume it's raw XML
-      const raw = xmlText.trim().startsWith('<') ? xmlText : (function(){ try{ return JSON.parse(xmlText).contents }catch(e){ return xmlText }} )();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(raw, 'application/xml');
-
-      // Handle parsererror
-      if (doc.querySelector('parsererror')) throw new Error('Failed to parse RSS XML');
-
-      // Use XML-safe methods (getElementsByTagName / localName) because selectors
-      // with namespace prefixes like 'yt:videoId' are not valid for querySelector.
-      const entries = Array.from(doc.getElementsByTagName('entry'));
-      return entries.map(e => {
-        // Try multiple ways to find the videoId (namespaced and non-namespaced)
-        let idNode = e.getElementsByTagName('yt:videoId')[0] || e.getElementsByTagName('videoId')[0];
-        if (!idNode) {
-          // fallback: scan child nodes for localName === 'videoId'
-          idNode = Array.from(e.childNodes).find(n => n && n.localName === 'videoId');
-        }
-        const id = idNode ? idNode.textContent.trim() : ((e.getElementsByTagName('id')[0] && e.getElementsByTagName('id')[0].textContent.trim()) || '');
-
-        const titleNode = e.getElementsByTagName('title')[0];
-        const publishedNode = e.getElementsByTagName('published')[0];
-        const title = titleNode ? titleNode.textContent.trim() : '';
-        const published = publishedNode ? publishedNode.textContent.trim() : '';
-        // Try to extract thumbnail URL from RSS (media:thumbnail or media:group)
-        let thumbUrl = null;
-        // direct media:thumbnail elements often have a url attribute
-        const mediaThumb = e.getElementsByTagName('media:thumbnail')[0];
-        if (mediaThumb && mediaThumb.getAttribute) {
-          thumbUrl = mediaThumb.getAttribute('url') || null;
-        }
-        // media:group -> media:thumbnail
-        if (!thumbUrl) {
-          const mediaGroup = e.getElementsByTagName('media:group')[0];
-          if (mediaGroup) {
-            const mt = mediaGroup.getElementsByTagName('media:thumbnail')[0] || mediaGroup.getElementsByTagName('thumbnail')[0];
-            if (mt && mt.getAttribute) thumbUrl = mt.getAttribute('url') || null;
-          }
-        }
-        // fallback: find any element named 'thumbnail' with url attribute
-        if (!thumbUrl) {
-          const anyThumb = Array.from(e.getElementsByTagName('*')).find(n => n && n.localName === 'thumbnail' && n.getAttribute && n.getAttribute('url'));
-          if (anyThumb) thumbUrl = anyThumb.getAttribute('url');
-        }
-
-        return {id,title,published,thumbnail: thumbUrl};
-      });
-    }
-
-    // Render a slice of videos to the grid
-    function render(videos, count){
-      videosEl.innerHTML = '';
-      const slice = videos.slice(0, count);
-      slice.forEach(v => videosEl.appendChild(createCard(v)));
-    }
-
-    // Main fetch + render flow
-    // Try a list of CORS proxies in order with retry/backoff
+    const INITIAL_COUNT = 9; // grid cards shown before "Load more"
     const PROXY_LIST = [
       'https://api.allorigins.win/get?url=',
       'https://api.codetabs.com/v1/proxy?quest=',
       'https://thingproxy.freeboard.io/fetch/'
     ];
 
-    async function fetchWithFallback(url){
-      const maxAttempts = PROXY_LIST.length;
-      for (let i = 0; i < maxAttempts; i++){
-        const proxy = PROXY_LIST[i];
-        const fullUrl = proxy + encodeURIComponent(url);
+    // Magazine sections, matched against the title and hashtags
+    const SECTIONS = {
+      fortnite: { label: 'Fortnite', rarity: 'Epic', test: /fortnite|fotnite|foetnite|clix/i },
+      zelda:    { label: 'Zelda',    rarity: 'Uncommon', test: /totk|zelda|colgera|hyrule/i },
+      football: { label: 'Football', rarity: 'Rare', test: /lamine|yamal|cr7|ronaldo|messi|football|soccer/i },
+      more:     { label: 'More',     rarity: 'Legendary', test: /.*/ }
+    };
+    const TAG_NAMES = { lamineyamal: 'Lamine Yamal', cr7: 'CR7', michaeljackson: 'Michael Jackson', totk: 'Tears of the Kingdom' };
+
+    const $ = id => document.getElementById(id);
+    const statusEl = $('status'), coverEl = $('cover'), featuresEl = $('features'), gridEl = $('grid'),
+          loadBtn = $('loadMore'), tickerEl = $('ticker'), countEl = $('features-count');
+
+    let videos = [];
+    let section = 'all';
+    let visible = INITIAL_COUNT;
+
+    function el(tag, className, text){
+      const n = document.createElement(tag);
+      if (className) n.className = className;
+      if (text != null) n.textContent = text;
+      return n;
+    }
+
+    function formatDate(iso, opts){
+      const d = new Date(iso);
+      return isNaN(d) ? '' : d.toLocaleDateString(undefined, opts || {year:'numeric', month:'short', day:'numeric'});
+    }
+
+    // Split "SNIIIPED! #fortnite#funny" into a headline and hashtags
+    function describe(video){
+      const hashtags = (video.title.match(/#[\p{L}\p{N}_]+/gu) || []).map(t => t.slice(1));
+      let headline = video.title.replace(/#[\p{L}\p{N}_]+/gu, ' ').replace(/\s+/g, ' ').trim();
+      if (!headline) headline = hashtags.map(t => TAG_NAMES[t.toLowerCase()] || t).join(' ') || 'New video';
+      const key = Object.keys(SECTIONS).find(k => SECTIONS[k].test.test(video.title));
+      return { ...video, headline, hashtags, section: key };
+    }
+
+    // Thumbnail with fallbacks; replaced by the player on click
+    function createFrame(video){
+      const frame = el('div', 'frame r-' + video.section);
+      const btn = el('button', 'play');
+      btn.type = 'button';
+      btn.setAttribute('aria-label', 'Play ' + video.headline);
+      const img = el('img');
+      img.alt = '';
+      img.loading = 'lazy';
+      const base = 'https://i.ytimg.com/vi/' + encodeURIComponent(video.id);
+      const sources = [video.thumbnail, base + '/maxresdefault.jpg', base + '/hqdefault.jpg'].filter(Boolean);
+      let i = 0;
+      img.onerror = () => {
+        i += 1;
+        if (i < sources.length) { img.src = sources[i]; return; }
+        const ph = el('div', 'placeholder s-' + video.section, SECTIONS[video.section].label);
+        ph.style.background = 'radial-gradient(circle at 30% 20%, rgba(255,255,255,.12), transparent 60%), linear-gradient(135deg, #1b2230, #0b0e13)';
+        img.replaceWith(ph);
+      };
+      // maxresdefault returns a 120px grey image instead of 404 when missing
+      img.onload = () => { if (img.naturalWidth <= 120 && i < sources.length - 1) img.onerror(); };
+      img.src = sources[0];
+      btn.append(img, el('span', 'a-btn'));
+      btn.addEventListener('click', () => {
+        const iframe = document.createElement('iframe');
+        iframe.src = 'https://www.youtube-nocookie.com/embed/' + video.id + '?autoplay=1&rel=0';
+        iframe.title = video.headline;
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+        frame.replaceChildren(iframe);
+      }, { once: true });
+      frame.appendChild(btn);
+      return frame;
+    }
+
+    function hashtagRow(video){
+      const row = el('span', 'hashtags');
+      video.hashtags.slice(0, 3).forEach(t => row.appendChild(el('span', null, '#' + t)));
+      return row;
+    }
+
+    function renderCover(){
+      const lead = videos[0];
+      coverEl.replaceChildren();
+      const main = el('article', 'cover-main r-' + lead.section);
+      main.appendChild(createFrame(lead));
+      const text = el('div', 'cover-text');
+      text.append(el('span', 'kicker', 'Cover story · Just dropped'), el('h2', null, lead.headline));
+      if (lead.blurb) text.appendChild(el('p', 'blurb', lead.blurb));
+      const meta = el('div', 'meta');
+      meta.append(el('span', 's-' + lead.section, SECTIONS[lead.section].label.toUpperCase()), el('span', null, formatDate(lead.published)), hashtagRow(lead));
+      text.appendChild(meta);
+      main.appendChild(text);
+
+      const toc = el('aside', 'toc');
+      const h = el('h3');
+      h.append(el('small', null, 'Inside this issue'), document.createTextNode('Contents'));
+      const list = el('ol');
+      videos.slice(1, 7).forEach((v, n) => {
+        const li = el('li'), a = el('a');
+        a.href = '#v-' + v.id;
+        a.append(el('span', 'pg', String(n * 2 + 4).padStart(2, '0')));
+        const t = el('span', 't', v.headline);
+        t.appendChild(el('span', 's s-' + v.section, SECTIONS[v.section].label));
+        a.appendChild(t);
+        li.appendChild(a);
+        list.appendChild(li);
+      });
+      toc.append(h, list);
+      coverEl.append(main, toc);
+      coverEl.hidden = false;
+    }
+
+    function renderGrid(){
+      const pool = videos.slice(1).filter(v => section === 'all' || v.section === section);
+      const shown = section === 'all' ? pool.slice(0, visible) : pool;
+      gridEl.replaceChildren();
+      shown.forEach((v, n) => {
+        const card = el('article', 'card r-' + v.section + (n === 0 && section === 'all' ? ' big' : ''));
+        card.id = 'v-' + v.id;
+        const body = el('div', 'card-body');
+        body.append(el('span', 'tag', SECTIONS[v.section].rarity + ' · ' + SECTIONS[v.section].label), el('h3', null, v.headline));
+        if (v.blurb) body.appendChild(el('p', 'blurb', v.blurb));
+        const meta = el('div', 'meta');
+        meta.append(el('span', null, formatDate(v.published)), hashtagRow(v));
+        body.appendChild(meta);
+        card.append(createFrame(v), body);
+        gridEl.appendChild(card);
+      });
+      if (!shown.length) gridEl.appendChild(el('p', 'status', 'Nothing in this section yet. Check back next issue!'));
+      countEl.textContent = pool.length + (pool.length === 1 ? ' video' : ' videos');
+      loadBtn.hidden = !(section === 'all' && pool.length > visible);
+      featuresEl.hidden = false;
+    }
+
+    function renderTicker(){
+      const items = videos.slice(0, 8).map(v => v.headline);
+      tickerEl.replaceChildren();
+      // Two copies so the loop scrolls seamlessly
+      [...items, ...items].forEach(t => tickerEl.appendChild(el('span', null, t)));
+    }
+
+    function render(){
+      const latest = videos[0];
+      $('issue').textContent = 'Issue · ' + formatDate(latest.published, {month:'short', year:'numeric'});
+      statusEl.hidden = true;
+      renderTicker();
+      renderCover();
+      renderGrid();
+    }
+
+    $('sections').addEventListener('click', e => {
+      const chip = e.target.closest('.chip');
+      if (!chip || !videos.length) return;
+      section = chip.dataset.section;
+      document.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', String(c === chip)));
+      renderGrid();
+    });
+    loadBtn.addEventListener('click', () => { visible = Infinity; renderGrid(); });
+
+    // Fallback: parse the YouTube Atom feed
+    function parseRss(xmlText){
+      const doc = new DOMParser().parseFromString(xmlText, 'application/xml');
+      if (doc.querySelector('parsererror')) throw new Error('Failed to parse RSS XML');
+      return Array.from(doc.getElementsByTagName('entry')).map(e => {
+        const byName = name => Array.from(e.getElementsByTagName('*')).find(n => n.localName === name);
+        const thumb = byName('thumbnail');
+        return {
+          id: (byName('videoId') || {}).textContent || '',
+          title: ((byName('title') || {}).textContent || '').trim(),
+          published: ((byName('published') || {}).textContent || '').trim(),
+          thumbnail: thumb ? thumb.getAttribute('url') : null
+        };
+      }).filter(v => v.id);
+    }
+
+    async function fetchViaProxies(url){
+      for (let i = 0; i < PROXY_LIST.length; i++){
         try{
-          // simple fetch with no-store
-          const resp = await fetch(fullUrl, { cache: 'no-store', mode: 'cors' });
+          const resp = await fetch(PROXY_LIST[i] + encodeURIComponent(url), { cache: 'no-store' });
           if (!resp.ok) throw new Error('proxy error ' + resp.status);
-          // Different proxies return different shapes. Attempt to extract contents.
           const text = await resp.text();
-          // AllOrigins returns JSON with `contents`; Codetabs returns the raw body; thingproxy returns raw body.
           let body = text;
           if (text.trim().startsWith('{')){
             try{ body = JSON.parse(text).contents || ''; }catch(e){ /* not JSON */ }
           }
           // Proxies can answer 200 with an error page; only accept a feed we can parse
-          const videos = parseRss(body);
-          if (videos.length === 0) throw new Error('no videos in response');
-          return videos;
+          const list = parseRss(body);
+          if (list.length) return list;
+          throw new Error('no videos in response');
         }catch(err){
-          console.warn('Proxy failed:', proxy, err.message);
-          // exponential backoff before next proxy
+          console.warn('Proxy failed:', PROXY_LIST[i], err.message);
           await new Promise(r => setTimeout(r, 400 * Math.pow(2, i)));
         }
       }
       throw new Error('All proxies failed');
     }
 
-    // Primary source: videos.json generated by the GitHub Action
     async function fetchVideosJson(){
       try{
         const resp = await fetch(VIDEOS_JSON, { cache: 'no-cache' });
@@ -330,44 +423,20 @@
       }
     }
 
-    async function loadVideos(){
+    async function load(){
       try{
-        statusEl.textContent = 'Fetching latest videos...';
-        // reset thumbnail failure tracking each fetch
-        thumbnailFailures = 0;
-        let videos = await fetchVideosJson();
-        if (videos.length === 0) videos = await fetchWithFallback(CHANNEL_RSS);
-
-        if (videos.length === 0) {
-          videosEl.innerHTML = '<p style="padding:1rem; color:var(--muted)">No videos found.</p>';
-          statusEl.textContent = 'No videos found.';
-          return;
-        }
-
-        // Initially show only INITIAL_COUNT
-        let visible = Math.min(INITIAL_COUNT, videos.length);
-        render(videos, visible);
-
-        // Show load more button if there are more
-        if (videos.length > INITIAL_COUNT){
-          loadBtn.style.display = 'inline-block';
-          loadBtn.onclick = () => {
-            visible = videos.length; // reveal all
-            render(videos, visible);
-            loadBtn.style.display = 'none';
-          };
-        }
-
-        if (thumbnailFailures === 0) statusEl.textContent = '';
+        let list = await fetchVideosJson();
+        if (!list.length) list = await fetchViaProxies(CHANNEL_RSS);
+        if (!list.length){ statusEl.textContent = 'No videos yet. The first issue is coming soon!'; return; }
+        videos = list.map(describe);
+        render();
       }catch(err){
         console.error(err);
-        videosEl.innerHTML = '<p style="padding:1rem; color:var(--muted)">Failed to load videos. Try again later.</p>';
-        statusEl.textContent = 'Failed to fetch feed. Will retry on refresh.';
+        statusEl.textContent = 'Couldn’t load this issue. Try refreshing in a minute.';
       }
     }
 
-    // Start
-    loadVideos();
+    load();
   })();
   </script>
 </body>
